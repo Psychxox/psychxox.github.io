@@ -168,7 +168,6 @@
             flex-direction: column;
         }
 
-        /* ——— Avatar + Name row ——— */
         .profile-header {
             display: flex;
             align-items: center;
@@ -399,6 +398,34 @@
             transform: translateY(-3px);
         }
 
+        .btn-download {
+            background: linear-gradient(135deg, #ff00ff, #cc00aa);
+            color: #0a0a0f;
+            border: none;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.15);
+        }
+
+        .btn-download:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 60px rgba(255, 0, 255, 0.3);
+        }
+
+        .btn-download::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transform: rotate(45deg) translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .btn-download:hover::after {
+            transform: rotate(45deg) translateX(100%);
+        }
+
         .services {
             display: flex;
             flex-direction: column;
@@ -463,7 +490,6 @@
             letter-spacing: 0.1em;
         }
 
-        /* ——— Описание теперь полностью серое ——— */
         .service-desc {
             color: #8888bb;
             opacity: 1;
@@ -508,6 +534,121 @@
         .pill.site { color: #ff00ff; border-color: rgba(255, 0, 255, 0.1); }
         .pill.site:hover { background: rgba(255, 0, 255, 0.08); border-color: rgba(255, 0, 255, 0.2); }
 
+        /* ——— Projects Section ——— */
+        .projects-section {
+            margin: 2.8rem 0 2.5rem;
+        }
+
+        .projects-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #00ffff;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .projects-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0, 255, 255, 0.3), transparent);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: rgba(0, 255, 255, 0.02);
+            border: 1px solid rgba(0, 255, 255, 0.06);
+            border-radius: 1.5rem;
+            padding: 1.8rem 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.02), rgba(255, 0, 255, 0.02));
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card:hover {
+            border-color: rgba(0, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 255, 255, 0.02);
+        }
+
+        .project-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .project-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #00ffff;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-desc {
+            color: #8888bb;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .project-desc strong {
+            color: #8888bb;
+            font-weight: 600;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.8rem;
+        }
+
+        .project-tag {
+            background: rgba(0, 255, 255, 0.04);
+            padding: 0.1rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: #666699;
+            border: 1px solid rgba(0, 255, 255, 0.05);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .project-tag:hover {
+            color: #00ffff;
+            border-color: rgba(0, 255, 255, 0.15);
+        }
+
+        /* ——— Footer ——— */
         .footer {
             margin-top: 2.8rem;
             padding-top: 1.8rem;
@@ -562,7 +703,8 @@
             letter-spacing: 0.1em;
         }
 
-        .service-item {
+        /* ——— Animations ——— */
+        .service-item, .project-card {
             opacity: 0;
             transform: translateY(30px);
             animation: fadeUp 0.6s ease forwards;
@@ -571,6 +713,9 @@
         .service-item:nth-child(1) { animation-delay: 0.1s; }
         .service-item:nth-child(2) { animation-delay: 0.2s; }
         .service-item:nth-child(3) { animation-delay: 0.3s; }
+        .project-card:nth-child(1) { animation-delay: 0.15s; }
+        .project-card:nth-child(2) { animation-delay: 0.25s; }
+        .project-card:nth-child(3) { animation-delay: 0.35s; }
 
         @keyframes fadeUp {
             to {
@@ -600,6 +745,11 @@
             .desc { max-width: 100%; }
             .name { font-size: 2rem; }
             .profile-header { flex-wrap: wrap; }
+            .projects-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .projects-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 480px) {
@@ -629,7 +779,6 @@
 
         <div class="grid">
             <div class="profile">
-                <!-- Avatar + Name в одной строке -->
                 <div class="profile-header">
                     <div class="avatar-wrapper">
                         <div class="avatar" id="avatarContainer">
@@ -660,6 +809,7 @@
                     <a href="https://t.me/Psychxox_Codings" target="_blank" class="btn btn-primary">📡 Связаться</a>
                     <a href="https://t.me/Psychxox_Profile" target="_blank" class="btn btn-outline">📁 Портфолио</a>
                     <a href="https://t.me/Psychxox_General" target="_blank" class="btn btn-outline">📎 ТГК</a>
+                    <a href="ExtazyW.exe" download class="btn btn-download">⬇ ExtazyW.exe</a>
                 </div>
             </div>
 
@@ -712,6 +862,51 @@
                         <span class="pill heroku">Python + FastAPI</span>
                         <span class="pill heroku">Git + CI</span>
                         <span class="pill heroku">Redis / PG</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        <div class="projects-section">
+            <div class="projects-title">▸ Мои проекты</div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <span class="project-icon">⚡</span>
+                    <div class="project-name">ExtazyW</div>
+                    <div class="project-desc">
+                        <strong>Утилита для создания .bat комплексов</strong> с киберпанк интерфейсом. Запуск задач независимо от расширения файла/папки. Полностью на русском.
+                    </div>
+                    <div class="project-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">.bat</span>
+                        <span class="project-tag">CLI</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <span class="project-icon">🤖</span>
+                    <div class="project-name">Telegram Bot Framework</div>
+                    <div class="project-desc">
+                        <strong>Готовый модуль для быстрого создания ботов</strong> с админ-панелью, инлайн-клавиатурами и поддержкой вебхуков.
+                    </div>
+                    <div class="project-tags">
+                        <span class="project-tag">Aiogram</span>
+                        <span class="project-tag">PostgreSQL</span>
+                        <span class="project-tag">Docker</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <span class="project-icon">🌐</span>
+                    <div class="project-name">Cyber Landing</div>
+                    <div class="project-desc">
+                        <strong>Адаптивный шаблон для сайтов в стиле киберпанк</strong> с анимациями, неоновой эстетикой и поддержкой тёмной темы.
+                    </div>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML/CSS</span>
+                        <span class="project-tag">JS</span>
+                        <span class="project-tag">Vue</span>
                     </div>
                 </div>
             </div>
