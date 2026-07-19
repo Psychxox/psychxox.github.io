@@ -649,6 +649,7 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .btn-download:hover {
@@ -783,7 +784,7 @@
             .name { font-size: 1.6rem; }
             .subname { font-size: 0.9rem; }
             .project-header { flex-direction: column; align-items: flex-start; }
-            .btn-download { width: 100%; justify-content: center; }
+            .btn-download { width: 100%; justify-content: center; white-space: normal; }
         }
     </style>
 </head>
@@ -896,7 +897,7 @@
                             <span class="project-icon">⚡</span>
                             <span class="project-name">ExtazyW</span>
                         </div>
-                        <a href="ExtazyW.exe" download class="btn-download">⬇ Скачать .exe</a>
+                        <a href="ExtazyW.exe" download class="btn-download" id="downloadBtn">⬇ Скачать — <span id="downloadCount">0</span></a>
                     </div>
                     <div class="project-desc">
                         <strong>Утилита для создания .bat комплексов</strong> с киберпанк интерфейсом. Запуск задач независимо от расширения файла/папки. Полностью на русском.
@@ -924,20 +925,16 @@
 
     <script>
         (function() {
+            // ——— Avatar ———
             const avatarContainer = document.getElementById('avatarContainer');
-
             const extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg', 'bmp', 'ico'];
             let found = false;
 
             function tryLoadAvatar(ext) {
                 return new Promise((resolve) => {
                     const img = new Image();
-                    img.onload = function() {
-                        resolve(true);
-                    };
-                    img.onerror = function() {
-                        resolve(false);
-                    };
+                    img.onload = function() { resolve(true); };
+                    img.onerror = function() { resolve(false); };
                     img.src = `ava.${ext}?t=${Date.now()}`;
                 });
             }
@@ -955,13 +952,40 @@
                         break;
                     }
                 }
-
                 if (!found) {
                     avatarContainer.innerHTML = `<div class="avatar-placeholder">OP</div>`;
                 }
             }
-
             findAndSetAvatar();
+
+            // ——— Download counter ———
+            const STORAGE_KEY = 'extazyW_downloads';
+            const downloadBtn = document.getElementById('downloadBtn');
+            const countSpan = document.getElementById('downloadCount');
+
+            // Форматирование числа: до 100 — точное, далее с шагом 100
+            function formatCount(count) {
+                if (count <= 100) {
+                    return count.toString();
+                }
+                // Округляем вниз до ближайшего кратного 100
+                const rounded = Math.floor(count / 100) * 100;
+                return rounded + '+';
+            }
+
+            // Получаем текущее значение из localStorage
+            let currentCount = parseInt(localStorage.getItem(STORAGE_KEY)) || 0;
+            countSpan.textContent = formatCount(currentCount);
+
+            // Обработчик клика по кнопке
+            downloadBtn.addEventListener('click', function(e) {
+                // Увеличиваем счётчик
+                currentCount += 1;
+                localStorage.setItem(STORAGE_KEY, currentCount.toString());
+                countSpan.textContent = formatCount(currentCount);
+                // Скачивание происходит автоматически благодаря атрибуту download
+            });
+
         })();
     </script>
 </body>
