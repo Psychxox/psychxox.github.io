@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
-    <title>Psychxox · Боты · Сайты · Heroku</title>
+    <title>Psychxox · CyberCoder</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,31 +15,92 @@
         }
 
         body {
-            background: #f6f9fc;
-            font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0f;
+            font-family: 'Rajdhani', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 1.5rem;
-            color: #1b2a3f;
+            color: #e0e0ff;
             line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* ——— Анимированный фон ——— */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(0, 255, 255, 0.05) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(255, 0, 255, 0.05) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(0, 100, 255, 0.08) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ——— Сетка фона ——— */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .card {
+            position: relative;
+            z-index: 1;
             max-width: 1200px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 3.5rem;
-            box-shadow: 0 30px 60px -20px rgba(0, 20, 40, 0.25), 0 8px 20px rgba(0, 0, 0, 0.04);
+            background: rgba(10, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 2rem;
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            box-shadow: 
+                0 0 60px rgba(0, 255, 255, 0.05),
+                inset 0 0 60px rgba(0, 255, 255, 0.02),
+                0 20px 60px rgba(0, 0, 0, 0.8);
             padding: 2.5rem 2.8rem;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
         }
 
-        /* ——— шапка ——— */
+        /* ——— Анимированная рамка ——— */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 2rem;
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #00ffff, #ff00ff);
+            background-size: 300% 300%;
+            z-index: -1;
+            animation: borderGlow 4s ease-in-out infinite;
+            opacity: 0.3;
+            filter: blur(4px);
+        }
+
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ——— header ——— */
         .header {
             display: flex;
             flex-wrap: wrap;
@@ -50,39 +111,56 @@
         }
 
         .logo {
+            font-family: 'Orbitron', monospace;
             font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            background: linear-gradient(145deg, #0b1c2e, #1d3b5c);
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            background: linear-gradient(90deg, #00ffff, #ff00ff, #00ffff);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: shimmer 3s linear infinite;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
         }
 
         .badge {
-            background: #eef3f9;
+            font-family: 'Orbitron', monospace;
+            background: rgba(0, 255, 255, 0.05);
             padding: 0.5rem 1.4rem;
             border-radius: 60px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: #1a3349;
-            border: 1px solid rgba(0,0,0,0.02);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-            letter-spacing: 0.3px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #00ffff;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: pulseBadge 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseBadge {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.05); }
+            50% { box-shadow: 0 0 40px rgba(0, 255, 255, 0.15); }
         }
 
         .badge i {
             font-style: normal;
-            background: #1d3b5c;
-            color: white;
+            background: #ff00ff;
+            color: #0a0a0f;
             border-radius: 30px;
             padding: 0.1rem 0.7rem;
             margin-left: 0.4rem;
-            font-weight: 600;
-            font-size: 0.8rem;
+            font-weight: 700;
+            font-size: 0.7rem;
         }
 
-        /* ——— сетка ——— */
+        /* ——— grid ——— */
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -95,22 +173,58 @@
             flex-direction: column;
         }
 
-        .avatar {
-            width: 80px;
-            height: 80px;
+        /* ——— Аватар с неоновым кольцом ——— */
+        .avatar-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #1e3d5e, #264d72);
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #00ffff);
+            background-size: 300% 300%;
+            animation: borderGlow 3s ease-in-out infinite;
+            opacity: 0.6;
+            filter: blur(6px);
+        }
+
+        .avatar-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            animation: spinBorder 4s linear infinite;
+            opacity: 0.4;
+        }
+
+        @keyframes spinBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .avatar {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #0a0a0f;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2.8rem;
-            font-weight: 500;
-            color: white;
-            box-shadow: 0 12px 18px -6px rgba(20, 50, 80, 0.25);
-            margin-bottom: 1.5rem;
+            font-weight: 700;
+            color: #00ffff;
             overflow: hidden;
             flex-shrink: 0;
             object-fit: cover;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            z-index: 2;
         }
 
         .avatar img {
@@ -126,45 +240,66 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #1e3d5e, #264d72);
-            color: white;
+            background: #0a0a0f;
+            color: #00ffff;
+            font-family: 'Orbitron', monospace;
             font-size: 2.8rem;
-            font-weight: 500;
+            font-weight: 900;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
         }
 
         .name {
-            font-size: 2.6rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+            font-family: 'Orbitron', monospace;
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
             line-height: 1.2;
             margin-bottom: 0.1rem;
-            color: #0a1f31;
+            background: linear-gradient(90deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(0, 255, 255, 0.15);
         }
 
         .subname {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 400;
-            color: #4a6a88;
+            color: #8888bb;
             margin-bottom: 0.6rem;
-            letter-spacing: 0.2px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .subname span {
+            color: #ff00ff;
+            font-weight: 600;
         }
 
         .title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 400;
-            color: #2f4b69;
+            color: #00ffff;
             margin-bottom: 1.2rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            opacity: 0.7;
         }
 
         .desc {
             font-size: 1rem;
-            color: #1f3b55;
+            color: #b0b0dd;
             max-width: 90%;
-            opacity: 0.9;
             margin-bottom: 1.8rem;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
+        .desc strong {
+            color: #00ffff;
+            font-weight: 600;
+        }
+
+        /* ——— Tech tags ——— */
         .tech-tags {
             display: flex;
             flex-wrap: wrap;
@@ -173,23 +308,27 @@
         }
 
         .tech-tag {
-            background: white;
-            padding: 0.5rem 1.2rem;
+            background: rgba(0, 255, 255, 0.05);
+            padding: 0.4rem 1.2rem;
             border-radius: 40px;
             font-weight: 500;
-            font-size: 0.85rem;
-            color: #103247;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(60, 100, 140, 0.12);
-            transition: all 0.15s;
+            font-size: 0.8rem;
+            color: #00ffff;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         .tech-tag:hover {
-            background: #eaf0f8;
-            border-color: #8aaec9;
-            transform: translateY(-2px);
+            background: rgba(0, 255, 255, 0.15);
+            border-color: #00ffff;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+            transform: translateY(-3px) scale(1.05);
         }
 
+        /* ——— Buttons ——— */
         .btn-group {
             display: flex;
             flex-wrap: wrap;
@@ -201,87 +340,134 @@
             display: inline-flex;
             align-items: center;
             gap: 0.6rem;
-            background: white;
             padding: 0.75rem 1.8rem;
-            border-radius: 80px;
+            border-radius: 60px;
+            font-family: 'Orbitron', monospace;
             font-weight: 600;
-            font-size: 0.95rem;
-            color: #0b253e;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
             text-decoration: none;
-            border: 1px solid rgba(0,0,0,0.04);
-            box-shadow: 0 6px 14px rgba(0, 20, 40, 0.04);
-            transition: 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-primary {
-            background: #0b253e;
-            color: white;
+            background: linear-gradient(135deg, #00ffff, #0088ff);
+            color: #0a0a0f;
             border: none;
-            box-shadow: 0 10px 18px -6px #0b253e30;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
         }
 
         .btn-primary:hover {
-            background: #123a5a;
-            transform: scale(1.01);
-            box-shadow: 0 14px 22px -8px #0b253e50;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 60px rgba(0, 255, 255, 0.3);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg) translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .btn-primary:hover::after {
+            transform: rotate(45deg) translateX(100%);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #00ffff;
+            border: 1px solid rgba(0, 255, 255, 0.3);
         }
 
         .btn-outline:hover {
-            background: #f0f6fe;
-            border-color: #7ea3c2;
+            background: rgba(0, 255, 255, 0.05);
+            border-color: #00ffff;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.05);
+            transform: translateY(-3px);
         }
 
-        /* ——— правый блок ——— */
+        /* ——— Services ——— */
         .services {
             display: flex;
             flex-direction: column;
-            gap: 1.8rem;
+            gap: 1.5rem;
         }
 
         .service-item {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(0, 255, 255, 0.02);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            border-radius: 2.2rem;
-            padding: 1.6rem 1.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            transition: 0.2s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+            border-radius: 1.5rem;
+            padding: 1.5rem 1.8rem;
+            border: 1px solid rgba(0, 255, 255, 0.06);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.02), rgba(255, 0, 255, 0.02));
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .service-item:hover::before {
+            opacity: 1;
         }
 
         .service-item:hover {
-            background: white;
-            box-shadow: 0 12px 28px -12px rgba(0, 30, 60, 0.12);
-            border-color: #d3e2f0;
+            border-color: rgba(0, 255, 255, 0.2);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 255, 255, 0.02);
         }
 
         .service-title {
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            font-size: 1.3rem;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.3rem;
+            color: #00ffff;
+            letter-spacing: 0.05em;
         }
 
         .service-title span {
-            background: #0b253e0c;
-            padding: 0.2rem 0.8rem;
+            background: rgba(255, 0, 255, 0.1);
+            padding: 0.1rem 0.8rem;
             border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #1a415f;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: #ff00ff;
+            border: 1px solid rgba(255, 0, 255, 0.1);
+            letter-spacing: 0.1em;
         }
 
         .service-desc {
-            color: #1d3b57;
+            color: #b0b0dd;
             opacity: 0.85;
-            font-size: 0.98rem;
+            font-size: 0.95rem;
         }
 
         .service-desc strong {
+            color: #00ffff;
             font-weight: 600;
-            color: #0a253e;
         }
 
         .pill-group {
@@ -292,112 +478,136 @@
         }
 
         .pill {
-            background: #eaf1fa;
-            padding: 0.2rem 1rem;
+            background: rgba(0, 255, 255, 0.04);
+            padding: 0.15rem 0.9rem;
             border-radius: 40px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 500;
-            letter-spacing: 0.2px;
-            color: #103247;
+            letter-spacing: 0.05em;
+            color: #8888bb;
+            border: 1px solid rgba(0, 255, 255, 0.05);
+            transition: all 0.3s;
+            text-transform: uppercase;
         }
 
-        .pill.heroku {
-            background: #44009910;
-            color: #2b0066;
-            border: 1px solid #44009920;
+        .pill:hover {
+            background: rgba(0, 255, 255, 0.08);
+            color: #00ffff;
+            border-color: rgba(0, 255, 255, 0.15);
         }
 
-        .pill.bot {
-            background: #0066cc10;
-            color: #004d99;
-            border: 1px solid #0066cc20;
-        }
+        .pill.heroku { color: #a855f7; border-color: rgba(168, 85, 247, 0.1); }
+        .pill.heroku:hover { background: rgba(168, 85, 247, 0.08); border-color: rgba(168, 85, 247, 0.2); }
+        .pill.bot { color: #00ffff; border-color: rgba(0, 255, 255, 0.1); }
+        .pill.bot:hover { background: rgba(0, 255, 255, 0.08); border-color: rgba(0, 255, 255, 0.2); }
+        .pill.site { color: #ff00ff; border-color: rgba(255, 0, 255, 0.1); }
+        .pill.site:hover { background: rgba(255, 0, 255, 0.08); border-color: rgba(255, 0, 255, 0.2); }
 
-        .pill.site {
-            background: #00886610;
-            color: #006644;
-            border: 1px solid #00886620;
-        }
-
-        /* ——— футер ——— */
+        /* ——— Footer ——— */
         .footer {
             margin-top: 2.8rem;
             padding-top: 1.8rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.03);
+            border-top: 1px solid rgba(0, 255, 255, 0.05);
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
             gap: 1rem;
-            font-size: 0.9rem;
-            color: #2a4b6a;
+            font-size: 0.8rem;
+            color: #555577;
         }
 
         .socials {
             display: flex;
-            gap: 1.2rem;
+            gap: 1.5rem;
         }
 
         .socials a {
-            color: #1f405e;
+            color: #555577;
             text-decoration: none;
             font-weight: 500;
-            border-bottom: 1.5px solid transparent;
-            transition: 0.2s;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .socials a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #00ffff;
+            transition: 0.3s;
         }
 
         .socials a:hover {
-            border-bottom-color: #1f405e;
-            color: #091c2e;
+            color: #00ffff;
+        }
+
+        .socials a:hover::after {
+            width: 100%;
         }
 
         .copy {
-            opacity: 0.5;
-            font-weight: 400;
-            font-size: 0.8rem;
+            opacity: 0.3;
+            font-weight: 300;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
         }
 
-        /* ——— responsive ——— */
+        /* ——— Scroll animation ——— */
+        .service-item {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        .service-item:nth-child(1) { animation-delay: 0.1s; }
+        .service-item:nth-child(2) { animation-delay: 0.2s; }
+        .service-item:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tech-tag {
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .tech-tag:nth-child(1) { animation-delay: 0.1s; }
+        .tech-tag:nth-child(2) { animation-delay: 0.2s; }
+        .tech-tag:nth-child(3) { animation-delay: 0.3s; }
+        .tech-tag:nth-child(4) { animation-delay: 0.4s; }
+        .tech-tag:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* ——— Responsive ——— */
         @media (max-width: 900px) {
-            .card {
-                padding: 2rem 1.5rem;
-                border-radius: 2.5rem;
-            }
-            .grid {
-                grid-template-columns: 1fr;
-                gap: 1.8rem;
-            }
-            .desc {
-                max-width: 100%;
-            }
-            .name {
-                font-size: 2.2rem;
-            }
+            .card { padding: 2rem 1.5rem; }
+            .grid { grid-template-columns: 1fr; gap: 1.8rem; }
+            .desc { max-width: 100%; }
+            .name { font-size: 2rem; }
         }
 
         @media (max-width: 480px) {
-            .card {
-                padding: 1.5rem 1rem;
-            }
-            .header {
-                flex-direction: column;
-                align-items: start;
-                gap: 0.6rem;
-            }
-            .btn-group {
-                width: 100%;
-            }
-            .btn {
-                flex: 1 1 auto;
-                justify-content: center;
-            }
-            .service-item {
-                padding: 1.2rem 1.2rem;
-            }
-            .footer {
-                flex-direction: column;
-                align-items: start;
-            }
+            .card { padding: 1.5rem 1rem; border-radius: 1.5rem; }
+            .header { flex-direction: column; align-items: start; gap: 0.6rem; }
+            .btn-group { width: 100%; }
+            .btn { flex: 1 1 auto; justify-content: center; font-size: 0.65rem; padding: 0.6rem 1.2rem; }
+            .service-item { padding: 1.2rem 1.2rem; }
+            .footer { flex-direction: column; align-items: start; }
+            .avatar-wrapper { width: 80px; height: 80px; }
+            .avatar { width: 80px; height: 80px; font-size: 2rem; }
         }
     </style>
 </head>
@@ -407,7 +617,7 @@
         <div class="header">
             <div class="logo">✦ Gradient OP</div>
             <div class="badge">
-                🚀 доступен для задач
+                ⚡ доступен для задач
                 <i>freelance</i>
             </div>
         </div>
@@ -416,33 +626,35 @@
         <div class="grid">
             <!-- левая колонка: профиль -->
             <div class="profile">
-                <div class="avatar" id="avatarContainer">
-                    <!-- сюда вставится картинка или OP -->
+                <div class="avatar-wrapper">
+                    <div class="avatar" id="avatarContainer">
+                        <!-- сюда вставится картинка или OP -->
+                    </div>
                 </div>
-                <h1 class="name">Psychxox & Programmer</h1>
-                <div class="subname">Сергей | 19 лет</div>
-                <div class="title">Telegram · Сайты · Heroku</div>
+                <h1 class="name">Psychxox</h1>
+                <div class="subname">Сергей · <span>19 лет</span></div>
+                <div class="title">▸ Coder ▸ Creator ▸ Architect</div>
                 <p class="desc">
                     Создаю <strong>ботавтоматов</strong>, 
-                    <strong>современные сайты</strong> и модули для 
+                    <strong>кибер-сайты</strong> и модули для 
                     <strong>Heroku юзербота</strong>. 
                     Чистый код, надёжные решения.
                 </p>
                 <div class="tech-tags">
                     <span class="tech-tag">Python</span>
                     <span class="tech-tag">Aiogram</span>
-                    <span class="tech-tag">Heroku API</span>
+                    <span class="tech-tag">FastAPI</span>
+                    <span class="tech-tag">Heroku</span>
                     <span class="tech-tag">PostgreSQL</span>
-                    <span class="tech-tag">Git</span>
                 </div>
                 <div class="btn-group">
-                    <a href="https://t.me/Psychxox_Codings" target="_blank" class="btn btn-primary">📬 Связаться</a>
+                    <a href="https://t.me/Psychxox_Codings" target="_blank" class="btn btn-primary">📡 Связаться</a>
                     <a href="https://t.me/Psychxox_Profile" target="_blank" class="btn btn-outline">📁 Портфолио</a>
-                    <a href="https://t.me/Psychxox_General" target="_blank" class="btn btn-primary">📎 Главный ТГК</a>
+                    <a href="https://t.me/Psychxox_General" target="_blank" class="btn btn-outline">📎 ТГК</a>
                 </div>
             </div>
 
-            <!-- правая колонка: услуги / expertise -->
+            <!-- правая колонка: услуги -->
             <div class="services">
                 <div class="service-item">
                     <div class="service-title">
@@ -505,7 +717,7 @@
                 <a href="#">Upwork</a>
             </div>
             <div class="copy">
-                © 2026 · сайт-визитка
+                © 2026 · cyber:vision
             </div>
         </div>
     </div>
@@ -514,31 +726,26 @@
         (function() {
             const avatarContainer = document.getElementById('avatarContainer');
 
-            // список возможных расширений
             const extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg', 'bmp', 'ico'];
             let found = false;
 
-            // функция, которая пытается загрузить картинку
             function tryLoadAvatar(ext) {
                 return new Promise((resolve) => {
                     const img = new Image();
                     img.onload = function() {
-                        // картинка загрузилась — успех
                         resolve(true);
                     };
                     img.onerror = function() {
                         resolve(false);
                     };
-                    img.src = `ava.${ext}?t=${Date.now()}`; // добавляем параметр, чтобы избежать кеша
+                    img.src = `ava.${ext}?t=${Date.now()}`;
                 });
             }
 
-            // асинхронно проверяем все расширения
             async function findAndSetAvatar() {
                 for (let ext of extensions) {
                     const success = await tryLoadAvatar(ext);
                     if (success) {
-                        // нашли рабочий файл — вставляем img
                         const img = document.createElement('img');
                         img.src = `ava.${ext}?t=${Date.now()}`;
                         img.alt = 'avatar';
@@ -549,7 +756,6 @@
                     }
                 }
 
-                // если ничего не нашли — оставляем "OP"
                 if (!found) {
                     avatarContainer.innerHTML = `<div class="avatar-placeholder">OP</div>`;
                 }
