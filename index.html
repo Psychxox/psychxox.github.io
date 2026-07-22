@@ -1,1345 +1,1304 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
-    <title>Psychxox · Personal WebSite</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Шрифты: Inter (англ/символы) + Roboto (русский) + Orbitron (акценты) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Roboto:wght@300;400;500;700&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            min-height: 100vh;
-            font-family: 'Roboto', sans-serif; /* русский по умолчанию */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1.5rem;
-            color: #e0e0ff;
-            line-height: 1.5;
-            overflow-x: hidden;
-            background: #0a0a0f;
-        }
-
-        /* ——— Переливающийся фон ——— */
-        .gradient-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            background: linear-gradient(-45deg, #0a0a1a, #1a0a2a, #0a1a2a, #1a0a1a);
-            background-size: 400% 400%;
-            animation: gradientMove 15s ease-in-out infinite;
-        }
-
-        .gradient-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(0, 255, 255, 0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(255, 0, 255, 0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 100%, rgba(0, 100, 255, 0.1) 0%, transparent 50%);
-            animation: pulseGlow 8s ease-in-out infinite alternate;
-        }
-
-        .gradient-bg::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            animation: gridPulse 6s ease-in-out infinite alternate;
-        }
-
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            25% { background-position: 100% 0%; }
-            50% { background-position: 100% 50%; }
-            75% { background-position: 0% 100%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes pulseGlow {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
-        }
-
-        @keyframes gridPulse {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.8; }
-        }
-
-        /* ——— Неоновые пятна ——— */
-        .spot {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.3;
-            z-index: 0;
-            pointer-events: none;
-            animation: spotFloat 20s ease-in-out infinite alternate;
-        }
-
-        .spot-1 {
-            width: 600px;
-            height: 600px;
-            top: -200px;
-            left: -200px;
-            background: #00ffff;
-            animation-delay: 0s;
-        }
-
-        .spot-2 {
-            width: 500px;
-            height: 500px;
-            bottom: -150px;
-            right: -150px;
-            background: #ff00ff;
-            animation-delay: -5s;
-        }
-
-        .spot-3 {
-            width: 400px;
-            height: 400px;
-            top: 40%;
-            left: 60%;
-            background: #0066ff;
-            animation-delay: -10s;
-            opacity: 0.15;
-        }
-
-        @keyframes spotFloat {
-            0% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(80px, -60px) scale(1.1); }
-            66% { transform: translate(-40px, 80px) scale(0.9); }
-            100% { transform: translate(60px, 40px) scale(1.05); }
-        }
-
-        .card {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            width: 100%;
-            background: rgba(10, 10, 20, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 2rem;
-            border: 1px solid rgba(0, 255, 255, 0.15);
-            box-shadow: 
-                0 0 80px rgba(0, 255, 255, 0.05),
-                inset 0 0 60px rgba(0, 255, 255, 0.02),
-                0 30px 80px rgba(0, 0, 0, 0.6);
-            padding: 2.5rem 2.8rem;
-            transition: all 0.3s ease;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 2rem;
-            background: linear-gradient(45deg, #00ffff, #ff00ff, #00ffff, #ff00ff);
-            background-size: 300% 300%;
-            z-index: -1;
-            animation: borderGlow 4s ease-in-out infinite;
-            opacity: 0.25;
-            filter: blur(4px);
-        }
-
-        @keyframes borderGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* ——— Глобальные шрифты ——— */
-        .lang-en {
-            font-family: 'Inter', sans-serif;
-        }
-        .lang-ru {
-            font-family: 'Roboto', sans-serif;
-        }
-        .lang-symbol {
-            font-family: 'Inter', sans-serif;
-        }
-        /* Акцентный шрифт для лого и заголовков */
-        .accent-font {
-            font-family: 'Orbitron', monospace;
-        }
-
-        .header {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 3rem;
-            gap: 1.2rem;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .logo {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.8rem;
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            background: linear-gradient(90deg, #00ffff, #ff00ff, #00ffff);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmer 3s linear infinite;
-            text-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
-
-        .btn-stars {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.4rem 1.2rem;
-            border-radius: 60px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 700;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            text-decoration: none;
-            background: linear-gradient(135deg, #ffd700, #ffaa00);
-            color: #0a0a0f;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .btn-stars:hover {
-            transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.3);
-            border-color: #ffd700;
-        }
-
-        .btn-stars::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transform: rotate(45deg) translateX(-100%);
-            transition: 0.6s;
-        }
-
-        .btn-stars:hover::after {
-            transform: rotate(45deg) translateX(100%);
-        }
-
-        .badge {
-            font-family: 'Inter', sans-serif;
-            background: rgba(0, 255, 255, 0.05);
-            padding: 0.5rem 1.4rem;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: #00ffff;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            animation: pulseBadge 2s ease-in-out infinite;
-        }
-
-        @keyframes pulseBadge {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.05); }
-            50% { box-shadow: 0 0 40px rgba(0, 255, 255, 0.15); }
-        }
-
-        .badge i {
-            font-style: normal;
-            background: #ff00ff;
-            color: #0a0a0f;
-            border-radius: 30px;
-            padding: 0.1rem 0.7rem;
-            margin-left: 0.4rem;
-            font-weight: 700;
-            font-size: 0.7rem;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2.8rem;
-            margin: 2.5rem 0 2.8rem;
-        }
-
-        .profile {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.2rem;
-            flex-wrap: wrap;
-        }
-
-        .avatar-wrapper {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            flex-shrink: 0;
-        }
-
-        .avatar-wrapper::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #00ffff, #ff00ff, #00ffff);
-            background-size: 300% 300%;
-            animation: borderGlow 3s ease-in-out infinite;
-            opacity: 0.6;
-            filter: blur(6px);
-        }
-
-        .avatar-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
-            animation: spinBorder 4s linear infinite;
-            opacity: 0.4;
-        }
-
-        @keyframes spinBorder {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .avatar {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: #0a0a0f;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: #00ffff;
-            overflow: hidden;
-            flex-shrink: 0;
-            object-fit: cover;
-            border: 2px solid rgba(0, 255, 255, 0.3);
-            z-index: 2;
-        }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .avatar-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #0a0a0f;
-            color: #00ffff;
-            font-family: 'Inter', sans-serif;
-            font-size: 2.8rem;
-            font-weight: 900;
-            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-        }
-
-        .name-group {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .name {
-            font-family: 'Orbitron', monospace;
-            font-size: 2.4rem;
-            font-weight: 900;
-            letter-spacing: 0.05em;
-            line-height: 1.2;
-            background: linear-gradient(90deg, #00ffff, #ff00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 40px rgba(0, 255, 255, 0.15);
-        }
-
-        .subname {
-            font-size: 1.1rem;
-            font-weight: 400;
-            color: #8888bb;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
-
-        .subname span {
-            color: #ff00ff;
-            font-weight: 600;
-        }
-
-        .title {
-            font-size: 1rem;
-            font-weight: 400;
-            color: #00ffff;
-            margin-bottom: 1.2rem;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            opacity: 0.7;
-        }
-
-        .desc {
-            font-size: 1rem;
-            color: #b0b0dd;
-            max-width: 90%;
-            margin-bottom: 1.8rem;
-            line-height: 1.7;
-        }
-
-        .desc strong {
-            color: #00ffff;
-            font-weight: 600;
-        }
-
-        .tech-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.7rem;
-            margin-bottom: 2rem;
-        }
-
-        .tech-tag {
-            background: rgba(0, 255, 255, 0.05);
-            padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            font-weight: 500;
-            font-size: 0.8rem;
-            color: #00ffff;
-            border: 1px solid rgba(0, 255, 255, 0.1);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: default;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .tech-tag:hover {
-            background: rgba(0, 255, 255, 0.15);
-            border-color: #00ffff;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
-            transform: translateY(-3px) scale(1.05);
-        }
-
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.9rem;
-            margin-top: 0.3rem;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.75rem 1.8rem;
-            border-radius: 60px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #00ffff, #0088ff);
-            color: #0a0a0f;
-            border: none;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 0 60px rgba(0, 255, 255, 0.3);
-        }
-
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(45deg) translateX(-100%);
-            transition: 0.6s;
-        }
-
-        .btn-primary:hover::after {
-            transform: rotate(45deg) translateX(100%);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #00ffff;
-            border: 1px solid rgba(0, 255, 255, 0.3);
-        }
-
-        .btn-outline:hover {
-            background: rgba(0, 255, 255, 0.05);
-            border-color: #00ffff;
-            box-shadow: 0 0 40px rgba(0, 255, 255, 0.05);
-            transform: translateY(-3px);
-        }
-
-        .services {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .service-item {
-            background: rgba(0, 255, 255, 0.02);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border-radius: 1.5rem;
-            padding: 1.5rem 1.8rem;
-            border: 1px solid rgba(0, 255, 255, 0.06);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 255, 255, 0.02), rgba(255, 0, 255, 0.02));
-            opacity: 0;
-            transition: 0.4s;
-        }
-
-        .service-item:hover::before {
-            opacity: 1;
-        }
-
-        .service-item:hover {
-            border-color: rgba(0, 255, 255, 0.2);
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 255, 255, 0.02);
-        }
-
-        .service-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.8rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-            color: #00ffff;
-            letter-spacing: 0.05em;
-            flex-wrap: nowrap;
-        }
-
-        .service-title .title-text {
-            white-space: nowrap;
-            font-size: 1rem;
-        }
-
-        .service-title .title-tag {
-            background: rgba(255, 0, 255, 0.1);
-            padding: 0.1rem 0.8rem;
-            border-radius: 30px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: #ff00ff;
-            border: 1px solid rgba(255, 0, 255, 0.1);
-            letter-spacing: 0.1em;
-            font-family: 'Inter', sans-serif;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .service-desc {
-            color: #8888bb;
-            opacity: 1;
-            font-size: 0.95rem;
-        }
-
-        .service-desc strong {
-            color: #8888bb;
-            font-weight: 600;
-        }
-
-        .pill-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem 0.7rem;
-            margin-top: 0.8rem;
-        }
-
-        .pill {
-            background: rgba(0, 255, 255, 0.04);
-            padding: 0.15rem 0.9rem;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            color: #8888bb;
-            border: 1px solid rgba(0, 255, 255, 0.05);
-            transition: all 0.3s;
-            text-transform: uppercase;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .pill:hover {
-            background: rgba(0, 255, 255, 0.08);
-            color: #00ffff;
-            border-color: rgba(0, 255, 255, 0.15);
-        }
-
-        .pill.heroku { color: #a855f7; border-color: rgba(168, 85, 247, 0.1); }
-        .pill.heroku:hover { background: rgba(168, 85, 247, 0.08); border-color: rgba(168, 85, 247, 0.2); }
-        .pill.bot { color: #00ffff; border-color: rgba(0, 255, 255, 0.1); }
-        .pill.bot:hover { background: rgba(0, 255, 255, 0.08); border-color: rgba(0, 255, 255, 0.2); }
-        .pill.site { color: #ff00ff; border-color: rgba(255, 0, 255, 0.1); }
-        .pill.site:hover { background: rgba(255, 0, 255, 0.08); border-color: rgba(255, 0, 255, 0.2); }
-
-        /* ——— Projects Section ——— */
-        .projects-section {
-            margin: 2.8rem 0 2.5rem;
-        }
-
-        .projects-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #00ffff;
-            letter-spacing: 0.1em;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            text-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .projects-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, rgba(0, 255, 255, 0.3), transparent);
-        }
-
-        /* ——— Сворачиваемые категории ——— */
-        .category-wrapper {
-            margin-bottom: 1.2rem;
-            border: 1px solid rgba(0, 255, 255, 0.08);
-            border-radius: 1.2rem;
-            overflow: hidden;
-            background: rgba(0, 255, 255, 0.02);
-            transition: all 0.3s ease;
-        }
-
-        .category-wrapper:hover {
-            border-color: rgba(0, 255, 255, 0.15);
-        }
-
-        .category-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            user-select: none;
-            transition: background 0.2s;
-            font-family: 'Orbitron', monospace;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #00ffff;
-            letter-spacing: 0.05em;
-        }
-
-        .category-header:hover {
-            background: rgba(0, 255, 255, 0.05);
-        }
-
-        .category-header .arrow {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
-            color: #00ffff;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .category-header .arrow.open {
-            transform: rotate(180deg);
-        }
-
-        .category-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 0 1.5rem;
-        }
-
-        .category-body.open {
-            max-height: 800px;
-            padding: 0 1.5rem 1.5rem 1.5rem;
-        }
-
-        .category-body .project-card {
-            margin-top: 0.5rem;
-        }
-
-        .category-body .project-card:last-child {
-            margin-bottom: 0;
-        }
-
-        /* ——— Project Cards ——— */
-        .project-card {
-            background: rgba(0, 255, 255, 0.02);
-            border: 1px solid rgba(0, 255, 255, 0.06);
-            border-radius: 1.2rem;
-            padding: 1.5rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 255, 255, 0.02), rgba(255, 0, 255, 0.02));
-            opacity: 0;
-            transition: 0.4s;
-        }
-
-        .project-card:hover::before {
-            opacity: 1;
-        }
-
-        .project-card:hover {
-            border-color: rgba(0, 255, 255, 0.2);
-            transform: translateY(-3px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 255, 255, 0.02);
-        }
-
-        .project-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-icon {
-            font-size: 2rem;
-            display: block;
-        }
-
-        .project-name {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #00ffff;
-            letter-spacing: 0.05em;
-        }
-
-        .project-desc {
-            color: #8888bb;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin: 0.5rem 0 0.8rem;
-        }
-
-        .project-desc strong {
-            color: #8888bb;
-            font-weight: 600;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .project-tag {
-            background: rgba(0, 255, 255, 0.04);
-            padding: 0.1rem 0.8rem;
-            border-radius: 40px;
-            font-size: 0.6rem;
-            font-weight: 500;
-            color: #666699;
-            border: 1px solid rgba(0, 255, 255, 0.05);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .project-tag:hover {
-            color: #00ffff;
-            border-color: rgba(0, 255, 255, 0.15);
-        }
-
-        .btn-download {
-            background: linear-gradient(135deg, #ff00ff, #cc00aa);
-            color: #0a0a0f;
-            border: none;
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.15);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.6rem 1.6rem;
-            border-radius: 60px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .btn-download:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 0 60px rgba(255, 0, 255, 0.3);
-        }
-
-        .btn-download::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-            transform: rotate(45deg) translateX(-100%);
-            transition: 0.6s;
-        }
-
-        .btn-download:hover::after {
-            transform: rotate(45deg) translateX(100%);
-        }
-
-        .empty-state {
-            color: #666699;
-            font-size: 0.95rem;
-            padding: 0.5rem 0;
-            line-height: 1.6;
-        }
-
-        .empty-state a {
-            color: #00ffff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.3s;
-            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-        }
-
-        .empty-state a:hover {
-            color: #ff00ff;
-            border-bottom-color: #ff00ff;
-        }
-
-        .footer {
-            margin-top: 2.8rem;
-            padding-top: 1.8rem;
-            border-top: 1px solid rgba(0, 255, 255, 0.05);
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            font-size: 0.8rem;
-            color: #555577;
-        }
-
-        .socials {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .socials a {
-            color: #555577;
-            text-decoration: none;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            transition: all 0.3s;
-            position: relative;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .socials a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: #00ffff;
-            transition: 0.3s;
-        }
-
-        .socials a:hover {
-            color: #00ffff;
-        }
-
-        .socials a:hover::after {
-            width: 100%;
-        }
-
-        .copy {
-            opacity: 0.3;
-            font-weight: 300;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* ——— Animations ——— */
-        .service-item, .project-card {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 0.6s ease forwards;
-        }
-
-        .service-item:nth-child(1) { animation-delay: 0.1s; }
-        .service-item:nth-child(2) { animation-delay: 0.2s; }
-        .service-item:nth-child(3) { animation-delay: 0.3s; }
-
-        @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .tech-tag {
-            opacity: 0;
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        .tech-tag:nth-child(1) { animation-delay: 0.1s; }
-        .tech-tag:nth-child(2) { animation-delay: 0.2s; }
-        .tech-tag:nth-child(3) { animation-delay: 0.3s; }
-        .tech-tag:nth-child(4) { animation-delay: 0.4s; }
-        .tech-tag:nth-child(5) { animation-delay: 0.5s; }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        /* ——— Responsive ——— */
-        @media (max-width: 900px) {
-            .card { padding: 2rem 1.5rem; }
-            .grid { grid-template-columns: 1fr; gap: 1.8rem; }
-            .desc { max-width: 100%; }
-            .name { font-size: 2rem; }
-            .profile-header { flex-wrap: wrap; }
-            .category-header { font-size: 0.9rem; padding: 0.8rem 1.2rem; }
-            .category-body.open { padding: 0 1.2rem 1.2rem 1.2rem; }
-            .service-title { font-size: 0.95rem; }
-            .service-title .title-text { font-size: 0.95rem; }
-            .header-left { gap: 1rem; }
-        }
-
-        @media (max-width: 480px) {
-            .card { padding: 1.5rem 1rem; border-radius: 1.5rem; }
-            .header { flex-direction: column; align-items: start; gap: 0.6rem; }
-            .header-left { width: 100%; justify-content: space-between; }
-            .btn-stars { font-size: 0.6rem; padding: 0.3rem 0.8rem; }
-            .btn-group { width: 100%; }
-            .btn { flex: 1 1 auto; justify-content: center; font-size: 0.65rem; padding: 0.6rem 1.2rem; }
-            .service-item { padding: 1.2rem 1.2rem; }
-            .service-title { font-size: 0.85rem; flex-wrap: wrap; }
-            .service-title .title-text { font-size: 0.85rem; white-space: normal; }
-            .service-title .title-tag { font-size: 0.55rem; }
-            .footer { flex-direction: column; align-items: start; }
-            .avatar-wrapper { width: 80px; height: 80px; }
-            .avatar { width: 80px; height: 80px; font-size: 2rem; }
-            .profile-header { gap: 1rem; }
-            .name { font-size: 1.6rem; }
-            .subname { font-size: 0.9rem; }
-            .project-header { flex-direction: column; align-items: flex-start; }
-            .btn-download { width: 100%; justify-content: center; white-space: normal; }
-            .category-header { font-size: 0.8rem; padding: 0.7rem 1rem; }
-            .category-body.open { padding: 0 1rem 1rem 1rem; }
-            .project-card { padding: 1rem; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Psychxox · Personal WebSite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <style>
+    /* ——— reset & base ——— */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #131313;
+      color: #d0d0d0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      transition: background 0.3s, color 0.3s;
+      scroll-behavior: smooth;
+    }
+
+    /* ——— DARK THEME (default) ——— */
+    /* Все заголовки светло-серые, кроме Psychxox & Gradient OP и Звёзды ТГ */
+    .block-title {
+      color: #c8c8c8;
+    }
+    .project-card h4 {
+      color: #c8c8c8;
+    }
+    .expand-header h4 {
+      color: #c8c8c8;
+    }
+    .tool-pill {
+      color: #c8c8c8;
+    }
+    .btn-ghost {
+      color: #c8c8c8;
+    }
+    .social-btn {
+      color: #c8c8c8;
+    }
+    .carousel-btn {
+      color: #c8c8c8;
+    }
+    .popup-content h2 {
+      color: #c8c8c8;
+    }
+    .popup-content ul li strong {
+      color: #c8c8c8;
+    }
+    .popup-text strong {
+      color: #c8c8c8;
+    }
+
+    /* "Часто использую:" — цвет #2b9c8c */
+    .highlight-label {
+      color: #2b9c8c;
+    }
+
+    /* Описания — серые */
+    .project-card p {
+      color: #888888;
+    }
+    .expand-body {
+      color: #888888;
+    }
+    .popup-text {
+      color: #888888;
+    }
+    .popup-content ul li {
+      color: #888888;
+    }
+    .search-count {
+      color: #888888;
+    }
+    .block .sub-text {
+      color: #888888;
+    }
+    .block-desc {
+      color: #888888;
+    }
+
+    /* ——— LIGHT THEME ——— */
+    body.light {
+      background: #f2f4f8;
+      color: #1f1f1f;
+    }
+    body.light .card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border-color: rgba(0, 0, 0, 0.06);
+    }
+    body.light .block {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.06);
+    }
+    body.light .block:hover {
+      border-color: #2b9c8c;
+    }
+    body.light .block-title {
+      color: #1f1f1f;
+    }
+    body.light .block-desc {
+      color: #3a3a3a;
+    }
+    body.light .btn-outline-light {
+      border-color: #2b9c8c;
+      color: #2b9c8c;
+    }
+    body.light .btn-outline-light:hover {
+      background: #2b9c8c20;
+    }
+    body.light .badge-soft {
+      background: rgba(43, 156, 140, 0.08);
+      color: #1f5a52;
+    }
+    body.light .footer {
+      border-color: rgba(0, 0, 0, 0.06);
+    }
+    body.light .theme-toggle {
+      background: rgba(0, 0, 0, 0.04);
+      color: #1f1f1f;
+    }
+    body.light .project-card {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.04);
+    }
+    body.light .project-card h4 {
+      color: #1f1f1f;
+    }
+    body.light .project-card p {
+      color: #3a3a3a;
+    }
+    body.light .expand-header h4 {
+      color: #1f1f1f;
+    }
+    body.light .expand-body {
+      color: #3a3a3a;
+    }
+    body.light .tool-pill {
+      color: #1f1f1f;
+      border-color: rgba(0, 0, 0, 0.06);
+    }
+    body.light .tool-pill:hover {
+      background: #2b9c8c10;
+    }
+    body.light .btn-ghost {
+      color: #1f1f1f;
+      border-color: rgba(0, 0, 0, 0.06);
+    }
+    body.light .btn-ghost:hover {
+      background: #2b9c8c08;
+    }
+    body.light .social-btn {
+      color: #1f1f1f;
+      border-color: rgba(0, 0, 0, 0.06);
+    }
+    body.light .social-btn:hover {
+      background: rgba(43, 156, 140, 0.08);
+      border-color: #2b9c8c66;
+    }
+    body.light .carousel-btn {
+      color: #1f1f1f;
+      border-color: rgba(0, 0, 0, 0.06);
+    }
+    body.light .carousel-btn:hover {
+      background: #2b9c8c12;
+    }
+    body.light .btn-download {
+      color: #1f6b5e;
+      border-color: #2b9c8c55;
+    }
+    body.light .btn-download:hover {
+      background: #2b9c8c20;
+    }
+    body.light .search-input {
+      background: rgba(0, 0, 0, 0.04);
+      color: #1f1f1f;
+      border-color: rgba(0, 0, 0, 0.06);
+    }
+    body.light .search-input::placeholder {
+      color: #888;
+    }
+    body.light .popup-content {
+      background: #f2f4f8;
+      color: #1f1f1f;
+    }
+    body.light .popup-close {
+      color: #1f1f1f;
+    }
+    body.light .popup-content h2 {
+      color: #1f1f1f;
+    }
+    body.light .popup-content ul li strong {
+      color: #1f1f1f;
+    }
+    body.light .popup-text strong {
+      color: #1f1f1f;
+    }
+    body.light .popup-text {
+      color: #3a3a3a;
+    }
+    body.light .popup-content ul li {
+      color: #3a3a3a;
+    }
+    body.light .skeleton-line {
+      background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    }
+    body.light .search-count {
+      color: #3a3a3a;
+    }
+    body.light .block .sub-text {
+      color: #3a3a3a;
+    }
+    body.light .highlight-label {
+      color: #2b9c8c;
+    }
+
+    /* ——— card ——— */
+    .card {
+      max-width: 1300px;
+      width: 100%;
+      background: rgba(20, 20, 20, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 32px 36px;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    /* ——— layout grid ——— */
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .block {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 28px;
+      padding: 24px 22px;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(4px);
+    }
+    .block:hover {
+      border-color: #2b9c8c55;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .block-title {
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .block-title span {
+      background: #2b9c8c30;
+      padding: 2px 10px;
+      border-radius: 40px;
+      font-size: 11px;
+      color: #2b9c8c;
+    }
+
+    /* ——— header ——— */
+    .header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.2s;
+    }
+    .header-left:hover {
+      opacity: 0.8;
+    }
+
+    .avatar-small {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fd000038;
+      background: #1f1f1f;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 30px;
+      letter-spacing: -0.02em;
+      color: #ff4500;
+    }
+    .logo span2 { color: #ff0000; }
+    .logo span3 { color: #fd7200; }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-star {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffd70020;
+      border: 1px solid #ffd70044;
+      border-radius: 60px;
+      padding: 6px 16px;
+      color: #ffd700;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+    .btn-star:hover {
+      background: #ffd70030;
+      border-color: #ffd70088;
+      transform: scale(1.02);
+    }
+
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.04);
+      border: none;
+      border-radius: 60px;
+      padding: 8px 18px;
+      color: #c0c0c0;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+      border: 1px solid transparent;
+    }
+    .theme-toggle:hover {
+      background: rgba(43, 156, 140, 0.12);
+      border-color: #2b9c8c44;
+      color: #fff;
+    }
+
+    .social-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 6px;
+    }
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 60px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .social-btn:hover {
+      background: rgba(43, 156, 140, 0.08);
+      border-color: #2b9c8c66;
+      transform: translateY(-2px);
+    }
+
+    /* ——— carousel ——— */
+    .carousel-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+    .carousel-track {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+      will-change: transform;
+    }
+
+    /* ——— Skeleton ——— */
+    .skeleton-card {
+      min-width: calc(50% - 10px);
+      flex: 0 0 auto;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 24px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .skeleton-line {
+      height: 16px;
+      background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .skeleton-line:last-child { margin-bottom: 0; }
+    .skeleton-line.sm { width: 40%; }
+    .skeleton-line.md { width: 70%; }
+    .skeleton-line.lg { width: 90%; }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .project-card {
+      min-width: calc(50% - 10px);
+      flex: 0 0 auto;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 24px;
+      padding: 20px 20px 22px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      transition: 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      border-color: #2b9c8c55;
+      background: rgba(43, 156, 140, 0.04);
+    }
+    .project-card.hidden {
+      display: none;
+    }
+    .project-card h4 {
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+    .project-card p {
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+      flex: 1;
+    }
+    .project-tag {
+      display: inline-block;
+      background: rgba(43, 156, 140, 0.08);
+      padding: 2px 12px;
+      border-radius: 40px;
+      font-size: 11px;
+      color: #2b9c8c;
+      margin-right: 6px;
+    }
+    .project-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ——— Search ——— */
+    .search-wrap {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .search-input {
+      flex: 1;
+      min-width: 180px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 60px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      transition: 0.2s;
+      outline: none;
+    }
+    .search-input::placeholder {
+      color: #666;
+    }
+    .search-input:focus {
+      border-color: #2b9c8c66;
+      background: rgba(43, 156, 140, 0.04);
+    }
+    .search-clear {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 60px;
+      padding: 10px 20px;
+      color: #888;
+      cursor: pointer;
+      transition: 0.2s;
+      font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+    }
+    .search-clear:hover {
+      background: rgba(255, 0, 0, 0.08);
+      border-color: #ff444466;
+      color: #ff4444;
+    }
+    .search-count {
+      font-size: 13px;
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .carousel-controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .carousel-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      width: 40px;
+      height: 40px;
+      border-radius: 60px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-btn:hover {
+      background: #2b9c8c22;
+      border-color: #2b9c8c88;
+    }
+
+    /* ——— buttons ——— */
+    .btn-download {
+      background: #2b9c8c30;
+      border: 1px solid #2b9c8c55;
+      border-radius: 60px;
+      padding: 5px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #2b9c8c;
+      text-decoration: none;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-download:hover {
+      background: #2b9c8c50;
+      border-color: #2b9c8c99;
+      transform: translateY(-2px);
+    }
+
+    .tool-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .tool-pill {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 8px 18px;
+      border-radius: 60px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tool-pill:hover {
+      background: rgba(43, 156, 140, 0.08);
+      border-color: #2b9c8c66;
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 12px 28px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-ghost:hover {
+      background: rgba(43, 156, 140, 0.06);
+      border-color: #2b9c8c66;
+      transform: translateY(-2px);
+    }
+    .btn-ghost.accent {
+      background: #2b9c8c18;
+      border-color: #2b9c8c44;
+    }
+    .btn-ghost.accent:hover {
+      background: #2b9c8c30;
+    }
+
+    /* ——— Expand (best projects) ——— */
+    .expand-item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 12px 0;
+    }
+    .expand-item:last-child {
+      border-bottom: 0;
+    }
+    .expand-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      padding: 4px 0;
+      user-select: none;
+    }
+    .expand-header h4 {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .expand-header .arrow {
+      transition: transform 0.3s;
+      color: #2b9c8c;
+      font-size: 18px;
+    }
+    .expand-header .arrow.open {
+      transform: rotate(180deg);
+    }
+
+    /* ——— footer ——— */
+    .footer {
+      margin-top: 32px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 13px;
+      color: #777;
+    }
+    .footer a {
+      color: #a0a0a0;
+      text-decoration: none;
+      margin-left: 18px;
+      transition: 0.2s;
+    }
+    .footer a:hover {
+      color: #2b9c8c;
+    }
+
+    /* ——— Go to Top Button ——— */
+    .go-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #2b9c8c;
+      color: #131313;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px rgba(43, 156, 140, 0.3);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .go-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .go-top:hover {
+      background: #36b8a6;
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 8px 40px rgba(43, 156, 140, 0.5);
+    }
+    body.light .go-top {
+      background: #2b9c8c;
+      color: #fff;
+    }
+
+    /* ——— Popup ——— */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .popup-overlay.active {
+      display: flex;
+    }
+    .popup-content {
+      background: #1a1a1a;
+      padding: 32px 36px;
+      border-radius: 28px;
+      max-width: 520px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      animation: popupIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes popupIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    .popup-close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-family: 'Inter', sans-serif;
+      line-height: 1;
+    }
+    .popup-close:hover {
+      transform: rotate(90deg);
+    }
+    .popup-content h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .popup-content ul {
+      list-style: none;
+      padding: 0;
+    }
+    .popup-content ul li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 15px;
+    }
+    .popup-content ul li:last-child {
+      border-bottom: none;
+    }
+    .popup-content ul li strong {
+      font-weight: 700;
+    }
+    .popup-content .popup-text {
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .popup-content .popup-text strong {
+      font-weight: 700;
+    }
+
+    /* ——— Copy Notification ——— */
+    .copy-notification {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(43, 156, 140, 0.95);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 2000;
+      box-shadow: 0 8px 40px rgba(43, 156, 140, 0.4);
+      max-width: 90%;
+      text-align: center;
+      pointer-events: none;
+    }
+    .copy-notification.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+    .copy-notification .copy-text {
+      display: block;
+      font-size: 12px;
+      opacity: 0.8;
+      margin-top: 4px;
+      word-break: break-all;
+    }
+
+    /* ——— animation ——— */
+    .block {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .block:nth-child(1) { animation-delay: 0.05s; }
+    .block:nth-child(2) { animation-delay: 0.10s; }
+    .block:nth-child(3) { animation-delay: 0.15s; }
+    .block:nth-child(4) { animation-delay: 0.20s; }
+    .block:nth-child(5) { animation-delay: 0.25s; }
+    .block:nth-child(6) { animation-delay: 0.30s; }
+    .block:nth-child(7) { animation-delay: 0.35s; }
+    .block:nth-child(8) { animation-delay: 0.40s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ——— responsive ——— */
+    @media (max-width: 900px) {
+      .grid-main { grid-template-columns: 1fr; }
+      .project-card { min-width: 100%; }
+      .skeleton-card { min-width: 100%; }
+      .card { padding: 24px 18px; }
+      .header-left { gap: 12px; }
+      .avatar-small { width: 40px; height: 40px; }
+      .popup-content { padding: 24px 20px; }
+      .go-top { width: 44px; height: 44px; font-size: 20px; bottom: 20px; right: 20px; }
+    }
+    @media (max-width: 500px) {
+      .header-flex { flex-direction: column; align-items: flex-start; }
+      .header-actions { width: 100%; justify-content: space-between; }
+      .social-row { flex-wrap: wrap; }
+      .btn-ghost { width: 100%; justify-content: center; }
+      .footer { flex-direction: column; align-items: flex-start; }
+      .search-wrap { flex-direction: column; }
+      .search-clear { width: 100%; justify-content: center; }
+    }
+  </style>
 </head>
 <body>
-    <!-- ——— Переливающийся фон ——— -->
-    <div class="gradient-bg"></div>
-    <div class="spot spot-1"></div>
-    <div class="spot spot-2"></div>
-    <div class="spot spot-3"></div>
-
-    <div class="card">
-        <div class="header">
-            <div class="header-left">
-                <div class="logo">✦ Gradient OP</div>
-                <a href="https://t.me/StarsZakupBot?start=ref_r_9827041ea9" target="_blank" class="btn-stars">
-                    ⭐ Выгодные звёзды ТГ
-                </a>
-            </div>
-            <div class="badge">
-                <span class="lang-en">⚡ available for tasks</span>
-                <i>freelance</i>
-            </div>
-        </div>
-
-        <div class="grid">
-            <div class="profile">
-                <div class="profile-header">
-                    <div class="avatar-wrapper">
-                        <div class="avatar" id="avatarContainer">
-                            <!-- сюда вставится картинка или OP -->
-                        </div>
-                    </div>
-                    <div class="name-group">
-                        <h1 class="name">Psychxox</h1>
-                        <div class="subname"><span class="lang-ru">Сергей</span> · <span>19 <span class="lang-ru">лет</span></span></div>
-                    </div>
-                </div>
-
-                <div class="title"><span class="lang-en">▸ Coder ▸ Creator ▸ Architect</span></div>
-                <p class="desc lang-ru">
-                    Создаю <strong>ботавтоматов</strong>, 
-                    <strong>кибер-сайты</strong> и модули для 
-                    <strong>Heroku юзербота</strong>. 
-                    Чистый код, надёжные решения.
-                </p>
-                <div class="tech-tags">
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">Aiogram</span>
-                    <span class="tech-tag">FastAPI</span>
-                    <span class="tech-tag">Heroku</span>
-                    <span class="tech-tag">PostgreSQL</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://t.me/Psychxox_Codings" target="_blank" class="btn btn-primary"><span class="lang-en">📡 Связаться</span></a>
-                    <a href="https://t.me/Psychxox_Profile" target="_blank" class="btn btn-primary"><span class="lang-en">📁 Портфолио</span></a>
-                    <a href="https://t.me/Psychxox_General" target="_blank" class="btn btn-primary"><span class="lang-en">📎 ТГК</span></a>
-                </div>
-            </div>
-
-            <div class="services">
-                <div class="service-item">
-                    <div class="service-title">
-                        <span class="title-text lang-en">🤖 Telegram bots</span>
-                        <span class="title-tag"><span class="lang-en">from scratch</span></span>
-                    </div>
-                    <div class="service-desc lang-ru">
-                        <strong>Админ-панели, инлайн-клавиатуры, вебхуки,</strong> 
-                        авторизация, платежи, рассылки. 
-                        Для бизнеса и личных проектов.
-                    </div>
-                    <div class="pill-group">
-                        <span class="pill bot">Aiogram 3.x</span>
-                        <span class="pill bot">python-telegram-bot</span>
-                        <span class="pill bot">Telegram API</span>
-                    </div>
-                </div>
-
-                <div class="service-item">
-                    <div class="service-title">
-                        <span class="title-text lang-en">🌐 Sites & web apps</span>
-                        <span class="title-tag"><span class="lang-en">front+back</span></span>
-                    </div>
-                    <div class="service-desc lang-ru">
-                        <strong>Лендинги, многостраничники, админки,</strong> 
-                        интеграция с ботами и базами данных. 
-                        Адаптивный дизайн, производительность.
-                    </div>
-                    <div class="pill-group">
-                        <span class="pill site">HTML/CSS/JS</span>
-                        <span class="pill site">FastAPI/Vue</span>
-                    </div>
-                </div>
-
-                <div class="service-item">
-                    <div class="service-title">
-                        <span class="title-text lang-en">⚙️ Heroku userbot modules</span>
-                        <span class="title-tag"><span class="lang-en">extensions</span></span>
-                    </div>
-                    <div class="service-desc lang-ru">
-                        <strong>Разработка плагинов, автодеплой,</strong> 
-                        управление dyno, кастомные команды, 
-                        мониторинг и масштабирование.
-                    </div>
-                    <div class="pill-group">
-                        <span class="pill heroku">Heroku CLI</span>
-                        <span class="pill heroku">Python + FastAPI</span>
-                        <span class="pill heroku">Git + CI</span>
-                        <span class="pill heroku">Redis / PG</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Projects Section with collapsible categories -->
-        <div class="projects-section">
-            <div class="projects-title"><span class="lang-en">▸ Мои проекты</span></div>
-            
-            <!-- Категория 1: Мои программы -->
-            <div class="category-wrapper">
-                <div class="category-header" onclick="toggleCategory(this)">
-                    <span class="lang-ru">📁 Мои программы</span>
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="category-body">
-                    <div class="project-card">
-                        <div class="project-header">
-                            <div>
-                                <span class="project-icon">⚡</span>
-                                <span class="project-name">ExtazyW</span>
-                            </div>
-                            <a href="ExtazyW.exe" download class="btn-download" id="downloadBtn"><span class="lang-ru">⬇ Скачать</span></a>
-                        </div>
-                        <div class="project-desc lang-ru">
-                            <strong>Утилита для создания .bat комплексов</strong> с киберпанк интерфейсом. Запуск задач независимо от расширения файла/папки. Полностью на русском.
-                        </div>
-                        <div class="project-tags">
-                            <span class="project-tag">Python</span>
-                            <span class="project-tag">.bat</span>
-                            <span class="project-tag">CLI</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Категория 2: Мои модули Heroku -->
-            <div class="category-wrapper">
-                <div class="category-header" onclick="toggleCategory(this)">
-                    <span class="lang-ru">📁 Мои модули Heroku</span>
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="category-body">
-                    <!-- BestFORMAT.py -->
-                    <div class="project-card">
-                        <div class="project-header">
-                            <div>
-                                <span class="project-icon">🎨</span>
-                                <span class="project-name">BestFORMAT.py</span>
-                            </div>
-                            <a href="BestFORMAT.zip" download class="btn-download"><span class="lang-ru">⬇ Скачать</span></a>
-                        </div>
-                        <div class="project-desc lang-ru">
-                            <strong>Модуль для автоматического форматирования сообщений.</strong> Поддерживает текстовое оформление через HTML-шаблоны и генерацию изображений с кастомными плейсхолдерами. Работает в режимах <strong>текст</strong> и <strong>фото</strong>.
-                        </div>
-                        <div class="project-tags">
-                            <span class="project-tag">Python</span>
-                            <span class="project-tag">Pillow</span>
-                            <span class="project-tag">SQLite</span>
-                            <span class="project-tag">Aiogram</span>
-                        </div>
-                    </div>
-
-                    <!-- aimoderator.py -->
-                    <div class="project-card">
-                        <div class="project-header">
-                            <div>
-                                <span class="project-icon">🤖</span>
-                                <span class="project-name">AIModerator.py</span>
-                            </div>
-                            <a href="aimoderator.zip" download class="btn-download"><span class="lang-ru">⬇ Скачать</span></a>
-                        </div>
-                        <div class="project-desc lang-ru">
-                            <strong>AI-модератор для чатов с поддержкой JSON-словарей.</strong> Автоматически отслеживает запрещённые слова и применяет действия: <strong>кик, мут (с таймером), бан.</strong> Включает белый список, глобальный лог-канал и статистику.
-                        </div>
-                        <div class="project-tags">
-                            <span class="project-tag">Python</span>
-                            <span class="project-tag">JSON</span>
-                            <span class="project-tag">SQLite</span>
-                            <span class="project-tag">Telethon</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Категория 3: Мои боты Telegram -->
-            <div class="category-wrapper">
-                <div class="category-header" onclick="toggleCategory(this)">
-                    <span class="lang-ru">📁 Мои боты Telegram</span>
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="category-body">
-                    <div class="empty-state lang-ru">
-                        🚧 Пока что проектов нет, но вы можете предложить их или заказать, перейдя по ссылке: 
-                        <a href="https://t.me/Psychxox_Codings" target="_blank">https://t.me/Psychxox_Codings</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Категория 4: Мои сайты -->
-            <div class="category-wrapper">
-                <div class="category-header" onclick="toggleCategory(this)">
-                    <span class="lang-ru">📁 Мои сайты</span>
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="category-body">
-                    <div class="empty-state lang-ru">
-                        🚧 Пока что проектов нет, но вы можете предложить их или заказать, перейдя по ссылке: 
-                        <a href="https://t.me/Psychxox_Codings" target="_blank">https://t.me/Psychxox_Codings</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer">
-            <div class="socials">
-                <a href="https://github.com/Psychxox"><span class="lang-en">GitHub</span></a>
-                <a href="https://t.me/Psychxox_General"><span class="lang-en">Telegram</span></a>
-                <a href="https://t.me/Psychxox_Codings"><span class="lang-en">Upwork</span></a>
-            </div>
-            <div class="copy">
-                <span class="lang-en">© 2026 · cyber:vision</span>
-            </div>
-        </div>
+  <div class="card" id="app">
+    <!-- header -->
+    <div class="header-flex">
+      <div class="header-left" id="copyHeader" title="Нажмите, чтобы скопировать ссылку">
+        <img src="ava.jpg" alt="avatar" class="avatar-small" id="avatarImg" />
+        <div class="logo">Psychxox <span2>&</span2> <span3>Gradient OP</span3></div>
+      </div>
+      <div class="header-actions">
+        <a href="https://t.me/StarsZakupBot?start=ref_r_9827041ea9" target="_blank" class="btn-star">⭐ Звёзды ТГ</a>
+        <button class="theme-toggle" id="themeToggle">☯︎ Тема</button>
+      </div>
     </div>
 
-    <script>
-        // ——— Avatar ———
-        (function() {
-            const avatarContainer = document.getElementById('avatarContainer');
-            const extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg', 'bmp', 'ico'];
-            let found = false;
+    <!-- сетка 2 колонки -->
+    <div class="grid-main">
 
-            function tryLoadAvatar(ext) {
-                return new Promise((resolve) => {
-                    const img = new Image();
-                    img.onload = function() { resolve(true); };
-                    img.onerror = function() { resolve(false); };
-                    img.src = `ava.${ext}?t=${Date.now()}`;
-                });
-            }
+      <!-- 1) соц. кнопки -->
+      <div class="block">
+        <div class="block-title">📱 связь</div>
+        <div class="social-row">
+          <a href="https://t.me/Psychxox_Codings" class="social-btn">💬 Связаться</a>
+          <a href="https://t.me/Psychxox_General" class="social-btn">📰 Личный Канал</a>
+          <a href="https://vk.ru/bessmert1e" class="social-btn">🐦 ВКонтакте</a>
+        </div>
+        <div class="sub-text" style="margin-top: 14px; font-size: 13px;">Отвечаю как только, так сразу!</div>
+      </div>
 
-            async function findAndSetAvatar() {
-                for (let ext of extensions) {
-                    const success = await tryLoadAvatar(ext);
-                    if (success) {
-                        const img = document.createElement('img');
-                        img.src = `ava.${ext}?t=${Date.now()}`;
-                        img.alt = 'avatar';
-                        avatarContainer.innerHTML = '';
-                        avatarContainer.appendChild(img);
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    avatarContainer.innerHTML = `<div class="avatar-placeholder">OP</div>`;
-                }
-            }
-            findAndSetAvatar();
-        })();
+      <!-- 2) быстрый доступ -->
+      <div class="block">
+        <div class="block-title">⚙️ быстрый доступ</div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="btn-ghost" id="priceBtn" style="flex:1;">💰 Прайс</button>
+          <button class="btn-ghost" id="themeToggle2" style="flex:1;">🌓 Сменить тему</button>
+        </div>
+        <div style="margin-top: 12px;">
+          <button class="btn-ghost" id="aboutBtn" style="width:100%; justify-content:center;">👤 Обо мне</button>
+        </div>
+      </div>
 
-        // ——— Toggle Categories ———
-        function toggleCategory(header) {
-            const body = header.nextElementSibling;
-            const arrow = header.querySelector('.arrow');
-            
-            if (body.classList.contains('open')) {
-                body.classList.remove('open');
-                arrow.classList.remove('open');
-            } else {
-                body.classList.add('open');
-                arrow.classList.add('open');
-            }
+      <!-- 3) карточки работ (карусель с поиском) -->
+      <div class="block" style="grid-column: span 2;">
+        <div class="block-title">📂 мои работы <span>карусель</span></div>
+        
+        <!-- Поиск -->
+        <div class="search-wrap">
+          <input type="text" class="search-input" id="searchInput" placeholder="🔍 Поиск проектов по названию..." />
+          <button class="search-clear" id="searchClear">✕ Очистить</button>
+          <span class="search-count" id="searchCount">Показано: 3</span>
+        </div>
+
+        <div class="carousel-wrap">
+          <div class="carousel-track" id="carouselTrack">
+            <!-- Проекты будут вставлены через JS -->
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="carouselPrev">‹</button>
+          <button class="carousel-btn" id="carouselNext">›</button>
+        </div>
+      </div>
+
+      <!-- 4) инструменты -->
+      <div class="block">
+        <div class="block-title">🧰 инструментарий</div>
+        <div class="tool-grid">
+          <a href="https://github.com/Psychxox" target="_blank" class="tool-pill">🐙 GitHub</a>
+          <div class="tool-pill">📦 PyPi</div>
+          <div class="tool-pill">⚡ Heroku</div>
+          <div class="tool-pill">🐍 Python</div>
+        </div>
+      </div>
+
+      <!-- 5) лучшие проекты (expand) -->
+      <div class="block">
+        <div class="block-title">⭐ лучшие проекты</div>
+        
+        <div class="expand-item">
+          <div class="expand-header" data-project="extazy">
+            <h4>ExtazyW</h4>
+            <span class="arrow">●</span>
+          </div>
+        </div>
+        <div class="expand-item">
+          <div class="expand-header" data-project="bestformat">
+            <h4>BestFORMAT</h4>
+            <span class="arrow">●</span>
+          </div>
+        </div>
+        <div class="expand-item">
+          <div class="expand-header" data-project="aimoderator">
+            <h4>AIModerator</h4>
+            <span class="arrow">●</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6) Telegram канал -->
+      <div class="block">
+        <div class="block-title">📢 телеграм</div>
+        <a href="https://t.me/Psychxox_General" target="_blank" class="btn-ghost accent" style="width:100%; justify-content:center; display:flex;">📎 Перейти в ТГК</a>
+        <div class="sub-text" style="margin-top:12px; font-size:13px;">новости, обновления, инсайды</div>
+      </div>
+
+    </div>
+
+    <!-- footer -->
+    <div class="footer">
+      <div>© 2026 · TG@psychxox</div>
+      <div>
+        <a href="https://github.com/Psychxox">GitHub</a>
+        <a href="https://t.me/Psychxox_Codings">UpWork</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Go to Top Button -->
+  <button class="go-top" id="goTopBtn" aria-label="Наверх">↑</button>
+
+  <!-- Copy Notification -->
+  <div class="copy-notification" id="copyNotification">
+    ✅ Скопировано!
+    <span class="copy-text" id="copyTextDisplay"></span>
+  </div>
+
+  <!-- Popup: Price -->
+  <div class="popup-overlay" id="pricePopup">
+    <div class="popup-content">
+      <button class="popup-close" data-popup="pricePopup">✕</button>
+      <h2>💰 Прайс-лист</h2>
+      <ul>
+        <li><strong>⚙️ Модуль Heroku</strong> — от 100₽</li>
+        <li><strong>🌐 Сайт (лендинг/визитка)</strong> — от 300₽</li>
+        <li><strong>🤖 Бот Telegram</strong> — от 500₽</li>
+        <li><strong>🖥️ Программа Windows</strong> — от 1000₽</li>
+        <li><strong>📦 Комплексный заказ</strong> — от 1000₽</li>
+      </ul>
+      <p style="margin-top: 16px; color: #888; font-size: 13px;">* Цены указаны приблизительно, точная стоимость обсуждается индивидуально.</p>
+    </div>
+  </div>
+
+  <!-- Popup: About -->
+  <div class="popup-overlay" id="aboutPopup">
+    <div class="popup-content">
+      <button class="popup-close" data-popup="aboutPopup">✕</button>
+      <h2>👤 Обо мне</h2>
+      <div class="popup-text">
+        <p><strong>Psychxox (Сергей)</strong></p>
+        <p>19 лет. Создаю ботов, веб-приложения и модули для Heroku.</p>
+        <p style="margin-top: 8px;">Пишу чистый код, люблю порядок и минимализм. Также могу создать небольшую программу под Windows.</p>
+        <p style="margin-top: 8px; color: #2b9c8c;">⚡ Дейвиз: «Код должен быть красивым, как стихотворение»</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup: Project Detail (для лучших проектов) -->
+  <div class="popup-overlay" id="projectPopup">
+    <div class="popup-content">
+      <button class="popup-close" data-popup="projectPopup">✕</button>
+      <h2 id="projectPopupTitle">Название проекта</h2>
+      <div class="popup-text" id="projectPopupBody">
+        <p>Описание проекта...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ——— Данные проектов ———
+    const projectsData = [
+      {
+        id: 'extazy',
+        name: 'ExtazyW',
+        icon: '⚡',
+        description: 'Утилита для .bat комплексов с киберпанк UI.',
+        tags: ['Python', 'CLI'],
+        download: 'ExtazyW.exe',
+        downloadLabel: 'Скачать .exe',
+        fullDescription: 'Мощный CLI-инструмент для создания .bat-сценариев. Поддерживает запуск любых файлов, интерактивный режим, полностью на русском.'
+      },
+      {
+        id: 'bestformat',
+        name: 'BestFORMAT',
+        icon: '🎨',
+        description: 'Форматирование сообщений + генерация фото.',
+        tags: ['Pillow', 'Aiogram'],
+        download: 'BestFORMAT.py',
+        downloadLabel: 'Скачать .py',
+        fullDescription: 'Модуль для Heroku: форматирует текст через HTML-шаблоны, генерирует изображения с плейсхолдерами. Режимы: текст / фото.'
+      },
+      {
+        id: 'aimoderator',
+        name: 'AIModerator',
+        icon: '🤖',
+        description: 'AI-модератор с JSON-словарями.',
+        tags: ['Telethon', 'SQLite'],
+        download: 'aimoderator.zip',
+        downloadLabel: 'Скачать .zip',
+        fullDescription: 'AI-модератор с белым списком, глобальным логом и статистикой. Действия: кик, мут (с таймером), бан. Гибкая настройка.'
+      }
+    ];
+
+    // ——— Рендер карусели ———
+    const track = document.getElementById('carouselTrack');
+    let currentIndex = 0;
+    let filteredProjects = [...projectsData];
+
+    function renderCarousel(projects) {
+      if (!projects.length) {
+        track.innerHTML = `<div style="padding: 40px 0; color: #666; text-align: center; width: 100%;">🔍 Ничего не найдено</div>`;
+        return;
+      }
+
+      track.innerHTML = projects.map(p => `
+        <div class="project-card" data-id="${p.id}">
+          <h4>${p.icon} ${p.name}</h4>
+          <p>${p.description}</p>
+          <div>
+            ${p.tags.map(t => `<span class="project-tag">${t}</span>`).join('')}
+          </div>
+          <div class="project-footer">
+            <span></span>
+            <a href="${p.download}" download class="btn-download">⬇ ${p.downloadLabel}</a>
+          </div>
+        </div>
+      `).join('');
+
+      // Обновляем карусель
+      setTimeout(updateCarousel, 50);
+      updateSearchCount(projects.length);
+    }
+
+    function updateSearchCount(count) {
+      document.getElementById('searchCount').textContent = `Показано: ${count}`;
+    }
+
+    // ——— Поиск ———
+    const searchInput = document.getElementById('searchInput');
+    const searchClear = document.getElementById('searchClear');
+
+    function filterProjects(query) {
+      const q = query.toLowerCase().trim();
+      if (!q) {
+        filteredProjects = [...projectsData];
+      } else {
+        filteredProjects = projectsData.filter(p => 
+          p.name.toLowerCase().includes(q)
+        );
+      }
+      renderCarousel(filteredProjects);
+      // Сброс индекса карусели
+      currentIndex = 0;
+      updateCarousel();
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      filterProjects(e.target.value);
+    });
+
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      filterProjects('');
+    });
+
+    // ——— Карусель ———
+    function updateCarousel() {
+      const cards = track.querySelectorAll('.project-card');
+      if (!cards.length) return;
+      const visible = window.innerWidth <= 900 ? 1 : 2;
+      const maxIndex = Math.max(0, cards.length - visible);
+      if (currentIndex > maxIndex) currentIndex = maxIndex;
+      const cardWidth = cards[0]?.offsetWidth + 20 || 300;
+      track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+    }
+
+    document.getElementById('carouselNext').addEventListener('click', () => {
+      const cards = track.querySelectorAll('.project-card');
+      if (!cards.length) return;
+      const visible = window.innerWidth <= 900 ? 1 : 2;
+      const maxIndex = Math.max(0, cards.length - visible);
+      currentIndex = Math.min(currentIndex + 1, maxIndex);
+      updateCarousel();
+    });
+
+    document.getElementById('carouselPrev').addEventListener('click', () => {
+      currentIndex = Math.max(currentIndex - 1, 0);
+      updateCarousel();
+    });
+
+    window.addEventListener('resize', updateCarousel);
+
+    // ——— Инициализация с Skeleton ———
+    function showSkeleton() {
+      track.innerHTML = `
+        <div class="skeleton-card"><div class="skeleton-line lg"></div><div class="skeleton-line md"></div><div class="skeleton-line sm"></div></div>
+        <div class="skeleton-card"><div class="skeleton-line lg"></div><div class="skeleton-line md"></div><div class="skeleton-line sm"></div></div>
+      `;
+    }
+
+    // Показываем скелетон на 0.7 сек, затем загружаем проекты
+    showSkeleton();
+    setTimeout(() => {
+      renderCarousel(projectsData);
+    }, 700);
+
+    // ——— Go to Top ———
+    const goTopBtn = document.getElementById('goTopBtn');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        goTopBtn.classList.add('visible');
+      } else {
+        goTopBtn.classList.remove('visible');
+      }
+    });
+
+    goTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ——— Theme toggle ———
+    const body = document.body;
+    const themeBtns = document.querySelectorAll('#themeToggle, #themeToggle2');
+    function toggleTheme() {
+      body.classList.toggle('light');
+    }
+    themeBtns.forEach(b => b.addEventListener('click', toggleTheme));
+
+    // ——— Popups ———
+    function openPopup(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePopup(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Закрытие по клику на overlay
+    document.querySelectorAll('.popup-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          closePopup(overlay.id);
         }
+      });
+    });
 
-        // ——— Счётчик скачиваний ExtazyW ———
-        (function() {
-            const STORAGE_KEY = 'extazyW_global_downloads';
-            const downloadBtn = document.getElementById('downloadBtn');
-            const countSpan = document.getElementById('downloadCount');
+    // Закрытие по крестику
+    document.querySelectorAll('.popup-close').forEach(btn => {
+      btn.addEventListener('click', () => {
+        closePopup(btn.dataset.popup);
+      });
+    });
 
-            function formatCount(count) {
-                if (count <= 100) return count.toString();
-                const rounded = Math.floor(count / 100) * 100;
-                return rounded + '+';
-            }
+    // Price popup
+    document.getElementById('priceBtn').addEventListener('click', () => openPopup('pricePopup'));
 
-            let currentCount = parseInt(localStorage.getItem(STORAGE_KEY)) || 0;
-            countSpan.textContent = formatCount(currentCount);
+    // About popup
+    document.getElementById('aboutBtn').addEventListener('click', () => openPopup('aboutPopup'));
 
-            if (downloadBtn) {
-                downloadBtn.addEventListener('click', function(e) {
-                    currentCount += 1;
-                    localStorage.setItem(STORAGE_KEY, currentCount.toString());
-                    countSpan.textContent = formatCount(currentCount);
-                });
-            }
-        })();
-    </script>
+    // Project popup (best projects)
+    document.querySelectorAll('.expand-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const projectId = header.dataset.project;
+        const project = projectsData.find(p => p.id === projectId);
+        if (project) {
+          document.getElementById('projectPopupTitle').textContent = `${project.icon} ${project.name}`;
+          document.getElementById('projectPopupBody').innerHTML = `
+            <p>${project.fullDescription}</p>
+            <p style="margin-top: 12px;">
+              <strong class="highlight-label">Часто использую:</strong> ${project.tags.join(', ')}
+            </p>
+            <p style="margin-top: 8px;">
+              <a href="${project.download}" download class="btn-download" style="margin-top: 8px;">⬇ Скачать ${project.downloadLabel}</a>
+            </p>
+          `;
+          openPopup('projectPopup');
+        }
+      });
+    });
+
+    // ——— Copy header (Telegram link) ———
+    const copyHeader = document.getElementById('copyHeader');
+    const copyNotification = document.getElementById('copyNotification');
+    const copyTextDisplay = document.getElementById('copyTextDisplay');
+    let notificationTimeout;
+
+    copyHeader.addEventListener('click', async () => {
+      const textToCopy = 'https://t.me/Psychxox_Codings';
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        copyTextDisplay.textContent = textToCopy;
+        copyNotification.classList.add('visible');
+        clearTimeout(notificationTimeout);
+        notificationTimeout = setTimeout(() => {
+          copyNotification.classList.remove('visible');
+        }, 2500);
+      } catch (err) {
+        console.error('Ошибка копирования:', err);
+        // fallback
+        const textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        copyTextDisplay.textContent = textToCopy;
+        copyNotification.classList.add('visible');
+        clearTimeout(notificationTimeout);
+        notificationTimeout = setTimeout(() => {
+          copyNotification.classList.remove('visible');
+        }, 2500);
+      }
+    });
+
+    // ——— Avatar fallback ———
+    const avatar = document.getElementById('avatarImg');
+    avatar.addEventListener('error', function() {
+      this.style.display = 'none';
+    });
+
+    // ——— Убираем expand-body (он не нужен) ———
+    // Все работает через popup
+  </script>
 </body>
 </html>
