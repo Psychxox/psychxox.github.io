@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
-    <title>Psychxox · CyberCoder</title>
+    <title>Psychxox · Personal WebSite</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Шрифты: Inter (англ/символы) + Roboto (русский) + Orbitron (акценты) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Roboto:wght@300;400;500;700&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,7 +17,7 @@
 
         body {
             min-height: 100vh;
-            font-family: 'Rajdhani', sans-serif;
+            font-family: 'Roboto', sans-serif; /* русский по умолчанию */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -173,6 +174,21 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* ——— Глобальные шрифты ——— */
+        .lang-en {
+            font-family: 'Inter', sans-serif;
+        }
+        .lang-ru {
+            font-family: 'Roboto', sans-serif;
+        }
+        .lang-symbol {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Акцентный шрифт для лого и заголовков */
+        .accent-font {
+            font-family: 'Orbitron', monospace;
+        }
+
         .header {
             display: flex;
             flex-wrap: wrap;
@@ -202,7 +218,7 @@
         }
 
         .badge {
-            font-family: 'Orbitron', monospace;
+            font-family: 'Inter', sans-serif;
             background: rgba(0, 255, 255, 0.05);
             padding: 0.5rem 1.4rem;
             border-radius: 60px;
@@ -230,6 +246,7 @@
             margin-left: 0.4rem;
             font-weight: 700;
             font-size: 0.7rem;
+            font-family: 'Inter', sans-serif;
         }
 
         .grid {
@@ -320,7 +337,7 @@
             justify-content: center;
             background: #0a0a0f;
             color: #00ffff;
-            font-family: 'Orbitron', monospace;
+            font-family: 'Inter', sans-serif;
             font-size: 2.8rem;
             font-weight: 900;
             text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
@@ -400,6 +417,7 @@
             cursor: default;
             letter-spacing: 0.05em;
             text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
         }
 
         .tech-tag:hover {
@@ -422,7 +440,7 @@
             gap: 0.6rem;
             padding: 0.75rem 1.8rem;
             border-radius: 60px;
-            font-family: 'Orbitron', monospace;
+            font-family: 'Inter', sans-serif;
             font-weight: 600;
             font-size: 0.75rem;
             text-transform: uppercase;
@@ -518,16 +536,23 @@
         .service-title {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 0.8rem;
-            font-family: 'Orbitron', monospace;
-            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
             font-weight: 600;
             margin-bottom: 0.3rem;
             color: #00ffff;
             letter-spacing: 0.05em;
+            flex-wrap: nowrap;
         }
 
-        .service-title span {
+        .service-title .title-text {
+            white-space: nowrap;
+            font-size: 1rem;
+        }
+
+        .service-title .title-tag {
             background: rgba(255, 0, 255, 0.1);
             padding: 0.1rem 0.8rem;
             border-radius: 30px;
@@ -536,6 +561,9 @@
             color: #ff00ff;
             border: 1px solid rgba(255, 0, 255, 0.1);
             letter-spacing: 0.1em;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .service-desc {
@@ -567,6 +595,7 @@
             border: 1px solid rgba(0, 255, 255, 0.05);
             transition: all 0.3s;
             text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
         }
 
         .pill:hover {
@@ -608,18 +637,76 @@
             background: linear-gradient(90deg, rgba(0, 255, 255, 0.3), transparent);
         }
 
-        .projects-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            max-width: 600px;
+        /* ——— Сворачиваемые категории ——— */
+        .category-wrapper {
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(0, 255, 255, 0.08);
+            border-radius: 1.2rem;
+            overflow: hidden;
+            background: rgba(0, 255, 255, 0.02);
+            transition: all 0.3s ease;
         }
 
+        .category-wrapper:hover {
+            border-color: rgba(0, 255, 255, 0.15);
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #00ffff;
+            letter-spacing: 0.05em;
+        }
+
+        .category-header:hover {
+            background: rgba(0, 255, 255, 0.05);
+        }
+
+        .category-header .arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: #00ffff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .category-header .arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .category-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0 1.5rem;
+        }
+
+        .category-body.open {
+            max-height: 800px;
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        .category-body .project-card {
+            margin-top: 0.5rem;
+        }
+
+        .category-body .project-card:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ——— Project Cards ——— */
         .project-card {
             background: rgba(0, 255, 255, 0.02);
             border: 1px solid rgba(0, 255, 255, 0.06);
-            border-radius: 1.5rem;
-            padding: 1.8rem 1.5rem;
+            border-radius: 1.2rem;
+            padding: 1.5rem;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
@@ -643,7 +730,7 @@
 
         .project-card:hover {
             border-color: rgba(0, 255, 255, 0.2);
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 255, 255, 0.02);
         }
 
@@ -657,12 +744,12 @@
         }
 
         .project-icon {
-            font-size: 2.2rem;
+            font-size: 2rem;
             display: block;
         }
 
         .project-name {
-            font-family: 'Orbitron', monospace;
+            font-family: 'Inter', sans-serif;
             font-size: 1.2rem;
             font-weight: 700;
             color: #00ffff;
@@ -698,6 +785,7 @@
             border: 1px solid rgba(0, 255, 255, 0.05);
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            font-family: 'Inter', sans-serif;
         }
 
         .project-tag:hover {
@@ -715,7 +803,7 @@
             gap: 0.6rem;
             padding: 0.6rem 1.6rem;
             border-radius: 60px;
-            font-family: 'Orbitron', monospace;
+            font-family: 'Inter', sans-serif;
             font-weight: 600;
             font-size: 0.7rem;
             text-transform: uppercase;
@@ -749,6 +837,26 @@
             transform: rotate(45deg) translateX(100%);
         }
 
+        .empty-state {
+            color: #666699;
+            font-size: 0.95rem;
+            padding: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        .empty-state a {
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .empty-state a:hover {
+            color: #ff00ff;
+            border-bottom-color: #ff00ff;
+        }
+
         .footer {
             margin-top: 2.8rem;
             padding-top: 1.8rem;
@@ -775,6 +883,7 @@
             text-transform: uppercase;
             transition: all 0.3s;
             position: relative;
+            font-family: 'Inter', sans-serif;
         }
 
         .socials a::after {
@@ -801,6 +910,7 @@
             font-weight: 300;
             font-size: 0.7rem;
             letter-spacing: 0.1em;
+            font-family: 'Inter', sans-serif;
         }
 
         /* ——— Animations ——— */
@@ -813,7 +923,6 @@
         .service-item:nth-child(1) { animation-delay: 0.1s; }
         .service-item:nth-child(2) { animation-delay: 0.2s; }
         .service-item:nth-child(3) { animation-delay: 0.3s; }
-        .project-card:nth-child(1) { animation-delay: 0.15s; }
 
         @keyframes fadeUp {
             to {
@@ -837,13 +946,17 @@
             to { opacity: 1; }
         }
 
+        /* ——— Responsive ——— */
         @media (max-width: 900px) {
             .card { padding: 2rem 1.5rem; }
             .grid { grid-template-columns: 1fr; gap: 1.8rem; }
             .desc { max-width: 100%; }
             .name { font-size: 2rem; }
             .profile-header { flex-wrap: wrap; }
-            .projects-grid { max-width: 100%; }
+            .category-header { font-size: 0.9rem; padding: 0.8rem 1.2rem; }
+            .category-body.open { padding: 0 1.2rem 1.2rem 1.2rem; }
+            .service-title { font-size: 0.95rem; }
+            .service-title .title-text { font-size: 0.95rem; }
         }
 
         @media (max-width: 480px) {
@@ -852,6 +965,9 @@
             .btn-group { width: 100%; }
             .btn { flex: 1 1 auto; justify-content: center; font-size: 0.65rem; padding: 0.6rem 1.2rem; }
             .service-item { padding: 1.2rem 1.2rem; }
+            .service-title { font-size: 0.85rem; flex-wrap: wrap; }
+            .service-title .title-text { font-size: 0.85rem; white-space: normal; }
+            .service-title .title-tag { font-size: 0.55rem; }
             .footer { flex-direction: column; align-items: start; }
             .avatar-wrapper { width: 80px; height: 80px; }
             .avatar { width: 80px; height: 80px; font-size: 2rem; }
@@ -860,6 +976,9 @@
             .subname { font-size: 0.9rem; }
             .project-header { flex-direction: column; align-items: flex-start; }
             .btn-download { width: 100%; justify-content: center; white-space: normal; }
+            .category-header { font-size: 0.8rem; padding: 0.7rem 1rem; }
+            .category-body.open { padding: 0 1rem 1rem 1rem; }
+            .project-card { padding: 1rem; }
         }
     </style>
 </head>
@@ -874,7 +993,7 @@
         <div class="header">
             <div class="logo">✦ Gradient OP</div>
             <div class="badge">
-                ⚡ доступен для задач
+                <span class="lang-en">⚡ available for tasks</span>
                 <i>freelance</i>
             </div>
         </div>
@@ -889,12 +1008,12 @@
                     </div>
                     <div class="name-group">
                         <h1 class="name">Psychxox</h1>
-                        <div class="subname">Сергей · <span>19 лет</span></div>
+                        <div class="subname"><span class="lang-ru">Сергей</span> · <span>19 <span class="lang-ru">лет</span></span></div>
                     </div>
                 </div>
 
-                <div class="title">▸ Coder ▸ Creator ▸ Architect</div>
-                <p class="desc">
+                <div class="title"><span class="lang-en">▸ Coder ▸ Creator ▸ Architect</span></div>
+                <p class="desc lang-ru">
                     Создаю <strong>ботавтоматов</strong>, 
                     <strong>кибер-сайты</strong> и модули для 
                     <strong>Heroku юзербота</strong>. 
@@ -908,19 +1027,19 @@
                     <span class="tech-tag">PostgreSQL</span>
                 </div>
                 <div class="btn-group">
-                    <a href="https://t.me/Psychxox_Codings" target="_blank" class="btn btn-primary">📡 Связаться</a>
-                    <a href="https://t.me/Psychxox_Profile" target="_blank" class="btn btn-outline">📁 Портфолио</a>
-                    <a href="https://t.me/Psychxox_General" target="_blank" class="btn btn-outline">📎 ТГК</a>
+                    <a href="https://t.me/Psychxox_Codings" target="_blank" class="btn btn-primary"><span class="lang-en">📡 Связаться</span></a>
+                    <a href="https://t.me/Psychxox_Profile" target="_blank" class="btn btn-primary"><span class="lang-en">📁 Портфолио</span></a>
+                    <a href="https://t.me/Psychxox_General" target="_blank" class="btn btn-primary"><span class="lang-en">📎 ТГК</span></a>
                 </div>
             </div>
 
             <div class="services">
                 <div class="service-item">
                     <div class="service-title">
-                        🤖 Telegram боты
-                        <span>с нуля</span>
+                        <span class="title-text lang-en">🤖 Telegram bots</span>
+                        <span class="title-tag"><span class="lang-en">from scratch</span></span>
                     </div>
-                    <div class="service-desc">
+                    <div class="service-desc lang-ru">
                         <strong>Админ-панели, инлайн-клавиатуры, вебхуки,</strong> 
                         авторизация, платежи, рассылки. 
                         Для бизнеса и личных проектов.
@@ -934,10 +1053,10 @@
 
                 <div class="service-item">
                     <div class="service-title">
-                        🌐 Сайты & веб-приложения
-                        <span>front+back</span>
+                        <span class="title-text lang-en">🌐 Sites & web apps</span>
+                        <span class="title-tag"><span class="lang-en">front+back</span></span>
                     </div>
-                    <div class="service-desc">
+                    <div class="service-desc lang-ru">
                         <strong>Лендинги, многостраничники, админки,</strong> 
                         интеграция с ботами и базами данных. 
                         Адаптивный дизайн, производительность.
@@ -950,10 +1069,10 @@
 
                 <div class="service-item">
                     <div class="service-title">
-                        ⚙️ Heroku юзербот модули
-                        <span>расширения</span>
+                        <span class="title-text lang-en">⚙️ Heroku userbot modules</span>
+                        <span class="title-tag"><span class="lang-en">extensions</span></span>
                     </div>
-                    <div class="service-desc">
+                    <div class="service-desc lang-ru">
                         <strong>Разработка плагинов, автодеплой,</strong> 
                         управление dyno, кастомные команды, 
                         мониторинг и масштабирование.
@@ -968,25 +1087,110 @@
             </div>
         </div>
 
-        <!-- Projects Section -->
+        <!-- Projects Section with collapsible categories -->
         <div class="projects-section">
-            <div class="projects-title">▸ Мои проекты</div>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <div>
-                            <span class="project-icon">⚡</span>
-                            <span class="project-name">ExtazyW</span>
+            <div class="projects-title"><span class="lang-en">▸ Мои проекты</span></div>
+            
+            <!-- Категория 1: Мои программы -->
+            <div class="category-wrapper">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span class="lang-ru">📁 Мои программы</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="category-body">
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div>
+                                <span class="project-icon">⚡</span>
+                                <span class="project-name">ExtazyW</span>
+                            </div>
+                            <a href="ExtazyW.exe" download class="btn-download" id="downloadBtn"><span class="lang-en">⬇ Скачать</span></a>
                         </div>
-                        <a href="ExtazyW.exe" download class="btn-download" id="downloadBtn">⬇ Скачать</a>
+                        <div class="project-desc lang-ru">
+                            <strong>Утилита для создания .bat комплексов</strong> с киберпанк интерфейсом. Запуск задач независимо от расширения файла/папки. Полностью на русском.
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">.bat</span>
+                            <span class="project-tag">CLI</span>
+                        </div>
                     </div>
-                    <div class="project-desc">
-                        <strong>Утилита для создания .bat комплексов</strong> с киберпанк интерфейсом. Запуск задач независимо от расширения файла/папки. Полностью на русском.
+                </div>
+            </div>
+
+            <!-- Категория 2: Мои модули Heroku -->
+            <div class="category-wrapper">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span class="lang-ru">📁 Мои модули Heroku</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="category-body">
+                    <!-- BestFORMAT.py -->
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div>
+                                <span class="project-icon">🎨</span>
+                                <span class="project-name">BestFORMAT.py</span>
+                            </div>
+                            <a href="BestFORMAT.py" download class="btn-download"><span class="lang-en">⬇ Скачать</span></a>
+                        </div>
+                        <div class="project-desc lang-ru">
+                            <strong>Модуль для автоматического форматирования сообщений.</strong> Поддерживает текстовое оформление через HTML-шаблоны и генерацию изображений с кастомными плейсхолдерами. Работает в режимах <strong>текст</strong> и <strong>фото</strong>.
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Pillow</span>
+                            <span class="project-tag">SQLite</span>
+                            <span class="project-tag">Aiogram</span>
+                        </div>
                     </div>
-                    <div class="project-tags">
-                        <span class="project-tag">Python</span>
-                        <span class="project-tag">.bat</span>
-                        <span class="project-tag">CLI</span>
+
+                    <!-- aimoderator.py -->
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div>
+                                <span class="project-icon">🤖</span>
+                                <span class="project-name">AIModerator.py</span>
+                            </div>
+                            <a href="aimoderator.py" download class="btn-download"><span class="lang-en">⬇ Скачать</span></a>
+                        </div>
+                        <div class="project-desc lang-ru">
+                            <strong>AI-модератор для чатов с поддержкой JSON-словарей.</strong> Автоматически отслеживает запрещённые слова и применяет действия: <strong>кик, мут (с таймером), бан.</strong> Включает белый список, глобальный лог-канал и статистику.
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">JSON</span>
+                            <span class="project-tag">SQLite</span>
+                            <span class="project-tag">Telethon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Категория 3: Мои боты Telegram -->
+            <div class="category-wrapper">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span class="lang-ru">📁 Мои боты Telegram</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="category-body">
+                    <div class="empty-state lang-ru">
+                        🚧 Пока что проектов нет, но вы можете предложить их или заказать, перейдя по ссылке: 
+                        <a href="https://t.me/Psychxox_Codings" target="_blank">https://t.me/Psychxox_Codings</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Категория 4: Мои сайты -->
+            <div class="category-wrapper">
+                <div class="category-header" onclick="toggleCategory(this)">
+                    <span class="lang-ru">📁 Мои сайты</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="category-body">
+                    <div class="empty-state lang-ru">
+                        🚧 Пока что проектов нет, но вы можете предложить их или заказать, перейдя по ссылке: 
+                        <a href="https://t.me/Psychxox_Codings" target="_blank">https://t.me/Psychxox_Codings</a>
                     </div>
                 </div>
             </div>
@@ -994,19 +1198,19 @@
 
         <div class="footer">
             <div class="socials">
-                <a href="#">GitHub</a>
-                <a href="#">Telegram</a>
-                <a href="#">Upwork</a>
+                <a href="https://github.com/Psychxox"><span class="lang-en">GitHub</span></a>
+                <a href="https://t.me/Psychxox_General"><span class="lang-en">Telegram</span></a>
+                <a href="https://t.me/Psychxox_Codings"><span class="lang-en">Upwork</span></a>
             </div>
             <div class="copy">
-                © 2026 · cyber:vision
+                <span class="lang-en">© 2026 · cyber:vision</span>
             </div>
         </div>
     </div>
 
     <script>
+        // ——— Avatar ———
         (function() {
-            // ——— Avatar ———
             const avatarContainer = document.getElementById('avatarContainer');
             const extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg', 'bmp', 'ico'];
             let found = false;
@@ -1038,33 +1242,44 @@
                 }
             }
             findAndSetAvatar();
+        })();
 
-            // ——— Глобальный счётчик скачиваний через localStorage ———
+        // ——— Toggle Categories ———
+        function toggleCategory(header) {
+            const body = header.nextElementSibling;
+            const arrow = header.querySelector('.arrow');
+            
+            if (body.classList.contains('open')) {
+                body.classList.remove('open');
+                arrow.classList.remove('open');
+            } else {
+                body.classList.add('open');
+                arrow.classList.add('open');
+            }
+        }
+
+        // ——— Счётчик скачиваний ExtazyW ———
+        (function() {
             const STORAGE_KEY = 'extazyW_global_downloads';
             const downloadBtn = document.getElementById('downloadBtn');
             const countSpan = document.getElementById('downloadCount');
 
-            // Форматирование: до 100 — точное число, иначе округление вниз до сотен с +
             function formatCount(count) {
-                if (count <= 100) {
-                    return count.toString();
-                }
+                if (count <= 100) return count.toString();
                 const rounded = Math.floor(count / 100) * 100;
                 return rounded + '+';
             }
 
-            // Получаем глобальное значение из localStorage
             let currentCount = parseInt(localStorage.getItem(STORAGE_KEY)) || 0;
             countSpan.textContent = formatCount(currentCount);
 
-            // При клике увеличиваем счётчик и сохраняем
-            downloadBtn.addEventListener('click', function(e) {
-                currentCount += 1;
-                localStorage.setItem(STORAGE_KEY, currentCount.toString());
-                countSpan.textContent = formatCount(currentCount);
-                // Скачивание происходит автоматически благодаря атрибуту download
-            });
-
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', function(e) {
+                    currentCount += 1;
+                    localStorage.setItem(STORAGE_KEY, currentCount.toString());
+                    countSpan.textContent = formatCount(currentCount);
+                });
+            }
         })();
     </script>
 </body>
